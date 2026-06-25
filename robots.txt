@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://siecraft.com/sitemap.xml
+
+# Disallow admin paths (none yet, but good practice)
+Disallow: /admin/
+Disallow: /private/
