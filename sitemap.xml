@@ -1,127 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-  <!-- Homepage -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://siecraft.com/</loc>
-    <lastmod>2026-06-17</lastmod>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Products -->
   <url>
-    <loc>https://siecraft.com/#products</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://siecraft.com/address-plaques-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Pricing -->
   <url>
-    <loc>https://siecraft.com/#pricing</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://siecraft.com/custom-business-signs-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Order Form -->
   <url>
-    <loc>https://siecraft.com/#order</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://siecraft.com/custom-wood-signs-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Gallery -->
   <url>
-    <loc>https://siecraft.com/#gallery</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Blog -->
-  <url>
-    <loc>https://siecraft.com/#blog</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://siecraft.com/dr-phillips-fl</loc>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-
-  <!-- Blog Post 1 -->
   <url>
-    <loc>https://siecraft.com/#blog-post-realtor-gifts</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://siecraft.com/kissimmee-fl</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-
-  <!-- Blog Post 2 -->
   <url>
-    <loc>https://siecraft.com/#blog-post-cedar-vs-walnut</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://siecraft.com/lake-nona-fl</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-
-  <!-- Blog Post 3 -->
   <url>
-    <loc>https://siecraft.com/#blog-post-tumbler-ideas</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://siecraft.com/laser-engraved-tumblers-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-
-  <!-- Blog Post 4 -->
   <url>
-    <loc>https://siecraft.com/#blog-post-memorial-sign</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://siecraft.com/memorial-signs-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-
-  <!-- Blog Post 5 -->
   <url>
-    <loc>https://siecraft.com/#blog-post-wood-care</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://siecraft.com/orlando-fl</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-
-  <!-- About -->
   <url>
-    <loc>https://siecraft.com/#about</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://siecraft.com/personalized-gifts-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-
-  <!-- How It Works -->
   <url>
-    <loc>https://siecraft.com/#how-it-works</loc>
-    <lastmod>2026-06-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://siecraft.com/winter-park-fl</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
-
-  <!-- FAQ -->
   <url>
-    <loc>https://siecraft.com/#faq</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://siecraft.com/blog/best-housewarming-gifts-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- Testimonials -->
   <url>
-    <loc>https://siecraft.com/#testimonials</loc>
-    <lastmod>2026-06-17</lastmod>
+    <loc>https://siecraft.com/blog/bridesmaid-gift-ideas-2025</loc>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
-
+  <url>
+    <loc>https://siecraft.com/blog/cedar-vs-pine-vs-walnut</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/christmas-ornaments-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/cnc-vs-laser-engraving</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/custom-keychains-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/custom-signs-realtors-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/cutting-board-personalized-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/florida-outdoor-sign-care</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/how-to-hang-wood-sign</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/laser-engraving-vs-vinyl</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/led-acrylic-signs-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/memorial-plaque-wording-ideas</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/office-door-signs-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/orlando-craft-markets</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/pet-memorial-signs</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/same-day-gifts-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/what-to-engrave-on-a-tumbler</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/why-buy-local-orlando</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://siecraft.com/blog/wood-signs-florida-outdoor</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

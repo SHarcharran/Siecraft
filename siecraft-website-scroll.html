@@ -4331,32 +4331,85 @@ function coSubmitAndPay() {
     return;
   }
 
-  // Send order details via email
   var rush = document.querySelector('input[name="co-rush"]:checked').value;
   var deposit = (coData.basePrice * 0.5).toFixed(2);
-  var subject = encodeURIComponent('SieCraft Custom Order — ' + coData.product);
-  var body = encodeURIComponent(
-    '=== SIECRAFT CUSTOM ORDER ===\n\n' +
-    'Product: ' + coData.product + '\n' +
-    'Customer: ' + document.getElementById('co-fname').value + ' ' + document.getElementById('co-lname').value + '\n' +
-    'Email: ' + document.getElementById('co-email').value + '\n' +
-    'Phone: ' + document.getElementById('co-phone').value + '\n\n' +
-    'Material: ' + document.getElementById('co-material').value + '\n' +
-    'Size: ' + document.getElementById('co-size').value + '\n' +
-    'Finish: ' + document.getElementById('co-finish').value + '\n' +
-    'Quantity: ' + document.getElementById('co-qty').value + '\n' +
-    'Turnaround: ' + (rush === 'rush' ? 'RUSH 48HR' : 'Standard 3–5 days') + '\n\n' +
-    'PERSONALIZATION:\n' + document.getElementById('co-text').value + '\n\n' +
-    'NOTES:\n' + document.getElementById('co-notes').value + '\n\n' +
-    '50% Deposit Due: $' + deposit
-  );
+  var fname = document.getElementById('co-fname').value;
+  var lname = document.getElementById('co-lname').value;
+  var email = document.getElementById('co-email').value;
+  var phone = document.getElementById('co-phone').value;
+  var material = document.getElementById('co-material').value;
+  var size = document.getElementById('co-size').value;
+  var finish = document.getElementById('co-finish').value;
+  var qty = document.getElementById('co-qty').value;
+  var text = document.getElementById('co-text').value;
+  var notes = document.getElementById('co-notes').value;
 
-  window.location.href = 'mailto:SieCraftcnc@gmail.com?subject=' + subject + '&body=' + body;
+  function fallbackToEmail() {
+    var subject = encodeURIComponent('SieCraft Custom Order — ' + coData.product);
+    var body = encodeURIComponent(
+      '=== SIECRAFT CUSTOM ORDER ===\n\n' +
+      'Product: ' + coData.product + '\n' +
+      'Customer: ' + fname + ' ' + lname + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + phone + '\n\n' +
+      'Material: ' + material + '\n' +
+      'Size: ' + size + '\n' +
+      'Finish: ' + finish + '\n' +
+      'Quantity: ' + qty + '\n' +
+      'Turnaround: ' + (rush === 'rush' ? 'RUSH 48HR' : 'Standard 3–5 days') + '\n\n' +
+      'PERSONALIZATION:\n' + text + '\n\n' +
+      'NOTES:\n' + notes + '\n\n' +
+      '50% Deposit Due: $' + deposit + '\n' +
+      '(Stripe checkout unavailable — please send a manual payment link)'
+    );
+    window.location.href = 'mailto:SieCraftcnc@gmail.com?subject=' + subject + '&body=' + body;
+    showCoSuccess();
+  }
 
-  // Show success
-  ['co-p1','co-p2','co-p3'].forEach(function(id){ document.getElementById(id).classList.remove('active'); });
-  document.getElementById('co-success').style.display = 'block';
-  [1,2,3].forEach(function(n){ var el=document.getElementById('csd-'+n); if(el){el.classList.remove('active');el.classList.add('done');el.textContent='✓';}});
+  function showCoSuccess() {
+    ['co-p1','co-p2','co-p3'].forEach(function(id){ document.getElementById(id).classList.remove('active'); });
+    document.getElementById('co-success').style.display = 'block';
+    [1,2,3].forEach(function(n){ var el=document.getElementById('csd-'+n); if(el){el.classList.remove('active');el.classList.add('done');el.textContent='✓';}});
+  }
+
+  var payBtn = document.getElementById('co-pay-btn');
+  var originalLabel = payBtn.textContent;
+  payBtn.disabled = true;
+  payBtn.textContent = 'Processing…';
+
+  fetch('/api/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      product: coData.product,
+      customerName: fname + ' ' + lname,
+      customerEmail: email,
+      customerPhone: phone,
+      material: material,
+      size: size,
+      finish: finish,
+      quantity: qty,
+      rush: rush,
+      personalization: text,
+      notes: notes,
+      depositAmount: deposit
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data && data.url) {
+      window.location.href = data.url; // → Stripe-hosted checkout
+    } else {
+      payBtn.disabled = false;
+      payBtn.textContent = originalLabel;
+      fallbackToEmail();
+    }
+  })
+  .catch(function() {
+    payBtn.disabled = false;
+    payBtn.textContent = originalLabel;
+    fallbackToEmail();
+  });
 }
 
 // Close modals

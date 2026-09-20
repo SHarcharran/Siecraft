@@ -4,6 +4,17 @@ Allow: /
 # Sitemaps
 Sitemap: https://siecraft.com/sitemap.xml
 
-# Disallow admin paths (none yet, but good practice)
-Disallow: /admin/
-Disallow: /private/
+# Internal tools — not for public search, only relevant if you choose to
+# host these on the live domain so they can sync data to the site.
+Disallow: /siecraft-shop-manager
+Disallow: /siecraft-shop-manager.html
+Disallow: /siecraft-photo-gallery
+Disallow: /siecraft-photo-gallery.html
+Disallow: /siecraft-admin
+Disallow: /siecraft-admin.html
+Disallow: /siecraft-command-center
+Disallow: /siecraft-command-center.html
+
+# Avoid duplicate-content indexing of the alternate homepage layout
+Disallow: /siecraft-website-scroll
+Disallow: /siecraft-website-scroll.html

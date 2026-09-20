@@ -1,0 +1,10 @@
+{
+  "name": "siecraft-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SieCraft LLC — website + Stripe deposit checkout + admin auth middleware",
+  "dependencies": {
+    "stripe": "^14.0.0",
+    "@vercel/edge": "^1.1.1"
+  }
+}
