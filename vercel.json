@@ -43,6 +43,16 @@
       "source": "/siecraft-website-scroll",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/blog/orlando-craft-markets",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-orlando-craft-markets",
+      "destination": "/blog",
+      "permanent": true
     }
   ]
 }
