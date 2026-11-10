@@ -1,0 +1,13 @@
+{
+  "_readme": "Single source of truth for prices. The server reads this file to compute every charge, so the browser can never set a price. 'from' is the starting price for custom work; the deposit is depositRate x from. Premade items are charged their full price. To sell a ready-made item, add it to 'premade' (image goes in /img/shop/). Set 'visible' to false to hide one.",
+  "depositRate": 0.5,
+  "custom": [
+    { "id": "wood-signs",   "name": "Wood Signs & Plaques", "emoji": "🪵", "from": 45, "summary": "Custom CNC wood signs in cedar, walnut, or pine." },
+    { "id": "tumblers",     "name": "Engraved Tumblers",    "emoji": "☕", "from": 38, "summary": "20oz or 30oz powder-coated tumblers with names or logos." },
+    { "id": "memorial",     "name": "Memorial Signs",       "emoji": "🕊️", "from": 75, "summary": "Handcrafted memorial plaques made with care from real wood." },
+    { "id": "business",     "name": "Business Signs",       "emoji": "🏢", "from": 65, "summary": "Professional office and storefront signs in real wood." },
+    { "id": "led-acrylic",  "name": "LED Acrylic Signs",    "emoji": "💡", "from": 55, "summary": "Glowing custom acrylic signs for businesses and events." },
+    { "id": "gifts",        "name": "Gifts & Laser Items",  "emoji": "🎁", "from": 8,  "summary": "Keychains, cutting boards, coasters, ornaments." }
+  ],
+  "premade": []
+}

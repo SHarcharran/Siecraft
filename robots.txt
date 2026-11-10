@@ -15,6 +15,3 @@ Disallow: /siecraft-admin.html
 Disallow: /siecraft-command-center
 Disallow: /siecraft-command-center.html
 
-# Avoid duplicate-content indexing of the alternate homepage layout
-Disallow: /siecraft-website-scroll
-Disallow: /siecraft-website-scroll.html
