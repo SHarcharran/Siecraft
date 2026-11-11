@@ -53,6 +53,31 @@
       "source": "/blog-orlando-craft-markets",
       "destination": "/blog",
       "permanent": true
+    },
+    {
+      "source": "/laser-engraved-tumblers-orlando",
+      "destination": "/personalized-gifts-orlando",
+      "permanent": true
+    },
+    {
+      "source": "/blog/what-to-engrave-on-a-tumbler",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-what-to-engrave-on-a-tumbler",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/led-acrylic-signs-orlando",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-led-acrylic-signs-orlando",
+      "destination": "/blog",
+      "permanent": true
     }
   ]
 }
