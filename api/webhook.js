@@ -53,27 +53,25 @@ module.exports = async (req, res) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'SieCraft Orders <orders@siecraft.com>',
-          to: ['SieCraftcnc@gmail.com'],
-          subject: `💰 Deposit Paid — ${m.product || 'Custom Order'} ($${amount})`,
+          from: process.env.MAIL_FROM || 'SieCraft Orders <orders@siecraft.com>',
+          to: [process.env.ORDER_EMAIL || 'SieCraftcnc@gmail.com'],
+          reply_to: paidEmail || undefined,
+          subject: `${m.kind === 'premade' ? 'Order paid' : 'Deposit paid'}: ${m.product || 'Custom order'} ($${amount})`,
           text: [
-            'New SieCraft deposit payment received!',
+            'New SieCraft payment received.',
             '',
             `Product: ${m.product || ''}`,
             `Customer: ${m.customerName || ''}`,
             `Email: ${paidEmail}`,
-            `Phone: ${m.customerPhone || ''}`,
+            `Phone: ${m.customerPhone || (session.customer_details && session.customer_details.phone) || ''}`,
             '',
             `Material: ${m.material || ''}`,
             `Size: ${m.size || ''}`,
-            `Finish: ${m.finish || ''}`,
-            `Quantity: ${m.quantity || ''}`,
-            `Turnaround: ${m.rush === 'rush' ? 'RUSH 48HR' : 'Standard 3–5 days'}`,
             '',
             `Personalization: ${m.personalization || ''}`,
             `Notes: ${m.notes || ''}`,
             '',
-            `Amount Paid (50% deposit): $${amount}`,
+            `Amount paid${m.kind === 'premade' ? '' : ' (50% deposit on starting price)'}: $${amount}`,
             `Stripe session: ${session.id}`
           ].join('\n')
         })

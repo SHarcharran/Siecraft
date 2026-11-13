@@ -1,23 +1,83 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/blog/:slug", "destination": "/blog-:slug.html" }
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog-:slug"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Content-Type", "value": "application/xml" },
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        {
+          "key": "Content-Type",
+          "value": "application/xml"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/siecraft-website-scroll",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/orlando-craft-markets",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-orlando-craft-markets",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/laser-engraved-tumblers-orlando",
+      "destination": "/personalized-gifts-orlando",
+      "permanent": true
+    },
+    {
+      "source": "/blog/what-to-engrave-on-a-tumbler",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-what-to-engrave-on-a-tumbler",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/led-acrylic-signs-orlando",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-led-acrylic-signs-orlando",
+      "destination": "/blog",
+      "permanent": true
     }
   ]
 }
