@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
     size: clip(b.size, 100),
     qty: clip(b.qty, 40),
     finish: clip(b.finish, 100),
-    rush: b.rush === 'rush' ? 'RUSH 48HR (+28%)' : 'Standard 3–5 days',
+    deadline: clip(b.deadline, 60) || 'No date given',
     text: clip(b.text, 3000),
     notes: clip(b.notes, 3000)
   };
@@ -90,7 +90,7 @@ module.exports = async (req, res) => {
     `Size: ${q.size}`,
     `Quantity: ${q.qty}`,
     `Finish: ${q.finish}`,
-    `Turnaround: ${q.rush}`,
+    `Needed by: ${q.deadline}`,
     '',
     'PERSONALIZATION:',
     q.text,
@@ -108,7 +108,7 @@ module.exports = async (req, res) => {
       from,
       to: [to],
       reply_to: q.email,
-      subject: `Quote request: ${q.type || 'Custom order'} from ${q.name}${q.rush.startsWith('RUSH') ? ' (RUSH)' : ''}`,
+      subject: `Quote request: ${q.type || 'Custom order'} from ${q.name}${q.deadline !== 'No date given' ? ` (needed by ${q.deadline})` : ''}`,
       text: ownerText,
       attachments: attachments.length ? attachments : undefined
     });
@@ -129,7 +129,7 @@ module.exports = async (req, res) => {
       text: [
         `Hi ${clip(b.fname, 40).replace(/[^\p{L}\p{M}' .-]/gu, '') || 'there'},`,
         '',
-        `Thanks for reaching out about a ${q.type || 'custom piece'}. Your request reached us, and we'll reply within 24 hours with your free design proof and an exact price.`,
+        `Thanks for reaching out about a ${q.type || 'custom piece'}. Your request reached us, and we'll reply with your free design proof and an exact price.`,
         '',
         'Need it sooner, or want to add something? Just reply to this email or text (929) 371-0501.',
         '',

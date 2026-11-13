@@ -78,6 +78,16 @@
       "source": "/blog-led-acrylic-signs-orlando",
       "destination": "/blog",
       "permanent": true
+    },
+    {
+      "source": "/blog/same-day-gifts-orlando",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-same-day-gifts-orlando",
+      "destination": "/blog",
+      "permanent": true
     }
   ]
 }
