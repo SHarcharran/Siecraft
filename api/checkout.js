@@ -68,9 +68,17 @@ module.exports = async (req, res) => {
   try {
     const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
     const site = process.env.SITE_URL || 'https://siecraft.com';
+    const who = clip(body.customerName, 80).trim() || email;
+    const description = clip(`${kind === 'deposit' ? 'Deposit' : 'Order'}: ${productName} - ${who}`, 300);
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       customer_email: email,
+      // Save a Customer so name/email show on every payment in the dashboard.
+      customer_creation: 'always',
+      payment_intent_data: {
+        description,
+        metadata: { kind, product: clip(productName, 200), customerName: clip(body.customerName, 200) }
+      },
       line_items: [lineItem],
       phone_number_collection: { enabled: true },
       metadata: {
