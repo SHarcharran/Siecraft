@@ -4,15 +4,11 @@
 // Requires STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, RESEND_API_KEY in Vercel.
 
 const Stripe = require('stripe');
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Stripe needs the raw request body to verify the signature, so the
-// default JSON body parser must be disabled for this route.
-module.exports.config = {
-  api: { bodyParser: false }
-};
-
-function buffer(req) {
+// Stripe needs the exact raw request body to verify the signature.
+async function rawBody(req) {
+  if (Buffer.isBuffer(req.body)) return req.body;
+  if (typeof req.body === 'string') return Buffer.from(req.body);
   return new Promise((resolve, reject) => {
     const chunks = [];
     req.on('data', (chunk) => chunks.push(chunk));
@@ -21,7 +17,7 @@ function buffer(req) {
   });
 }
 
-module.exports = async (req, res) => {
+async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).end();
     return;
@@ -31,7 +27,8 @@ module.exports = async (req, res) => {
   let event;
 
   try {
-    const buf = await buffer(req);
+    const buf = await rawBody(req);
+    const stripe = Stripe(process.env.STRIPE_SECRET_KEY || 'sk_unused');
     event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error('Webhook signature verification failed:', err.message);
@@ -46,7 +43,7 @@ module.exports = async (req, res) => {
     const amount = ((session.amount_total || 0) / 100).toFixed(2);
 
     try {
-      await fetch('https://api.resend.com/emails', {
+      const r = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
@@ -76,6 +73,7 @@ module.exports = async (req, res) => {
           ].join('\n')
         })
       });
+      if (!r.ok) console.error('Resend email failed:', r.status, await r.text());
     } catch (err) {
       console.error('Resend email failed:', err);
       // Don't fail the webhook over an email issue — Stripe will retry
@@ -84,4 +82,8 @@ module.exports = async (req, res) => {
   }
 
   res.status(200).json({ received: true });
-};
+}
+
+module.exports = handler;
+// Must be attached AFTER module.exports is assigned, or it is lost.
+module.exports.config = { api: { bodyParser: false } };

@@ -127,12 +127,9 @@ module.exports = async (req, res) => {
       reply_to: to,
       subject: 'We got your SieCraft quote request',
       text: [
-        `Hi ${clip(b.fname, 80) || 'there'},`,
+        `Hi ${clip(b.fname, 40).replace(/[^\p{L}\p{M}' .-]/gu, '') || 'there'},`,
         '',
         `Thanks for reaching out about a ${q.type || 'custom piece'}. Your request reached us, and we'll reply within 24 hours with your free design proof and an exact price.`,
-        '',
-        'What you sent:',
-        q.text,
         '',
         'Need it sooner, or want to add something? Just reply to this email or text (929) 371-0501.',
         '',
