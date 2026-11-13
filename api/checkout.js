@@ -57,7 +57,7 @@ module.exports = async (req, res) => {
         currency: 'usd',
         product_data: {
           name: `SieCraft deposit: ${item.name}`,
-          description: `50% deposit on the $${item.from} starting price. Applied to your final total, confirmed with your design proof.`
+          description: `50% deposit on the $${item.from} starting price. Applied to your final total. Fully refundable until you approve your design proof.`
         },
         unit_amount: depositCents
       },
