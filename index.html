@@ -592,7 +592,7 @@ body {
     <div class="product-grid">
       <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🪵</span><div class="prod-name">Wood Signs & Plaques</div><div class="prod-desc">Business signs, home décor, address plaques, memorial tributes in cedar, walnut, or pine.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
       <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🧀</span><div class="prod-name">Serving Boards</div><div class="prod-desc">Florida-shaped boards and handled charcuterie boards in solid maple.</div><div class="prod-price">Get a quote</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🕊️</span><div class="prod-name">Memorial Signs</div><div class="prod-desc">Indoor plaques, outdoor garden signs, and photo-engraved wood portraits.</div><div class="prod-price">from $75</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🕊️</span><div class="prod-name">Memorial Signs</div><div class="prod-desc">Indoor plaques, outdoor garden signs, and photo-engraved wood portraits.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
       <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🏡</span><div class="prod-name">Home & Wall Décor</div><div class="prod-desc">Family name signs, established signs, address plaques, quote pieces.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
       <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🏢</span><div class="prod-name">Business Signs</div><div class="prod-desc">Door signs, reception signs, award plaques, and lobby signage.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
       <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🍺</span><div class="prod-name">Bar &amp; Groomsmen Gifts</div><div class="prod-desc">Carved cap-catcher bottle openers and valet trays.</div><div class="prod-price">Get a quote</div><div class="prod-arrow">↗</div></div>
@@ -645,8 +645,8 @@ body {
         <div class="custom-card" onclick="openCustomOrderApp('wood-signs','Wood Signs & Plaques','🪵',45,'Custom CNC wood signs in cedar, walnut, or pine.')">
           <div class="custom-visual">🪵</div><div class="custom-body"><div class="custom-name">Wood Signs & Plaques</div><div class="custom-desc">CNC-routed from real cedar, walnut, or pine. Address plaques, family signs, business signs, memorial pieces.</div><div class="custom-footer"><div class="custom-price">from $45 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
         </div>
-        <div class="custom-card" onclick="openCustomOrderApp('memorial','Memorial Signs','🕊️',75,'Handcrafted memorial plaques made with care from real wood.')">
-          <div class="custom-visual" style="background:linear-gradient(135deg,#0a0a0a,#0e0e0e)">🕊️</div><div class="custom-body"><div class="custom-name">Memorial Signs</div><div class="custom-desc">Indoor plaques, outdoor garden signs, and photo-engraved portraits.</div><div class="custom-footer"><div class="custom-price">from $75 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
+        <div class="custom-card" onclick="openCustomOrderApp('memorial','Memorial Signs','🕊️',65,'Memorial plaques, including pet memorials, made with care from real wood.')">
+          <div class="custom-visual" style="background:linear-gradient(135deg,#0a0a0a,#0e0e0e)">🕊️</div><div class="custom-body"><div class="custom-name">Memorial Signs</div><div class="custom-desc">Indoor plaques, outdoor garden signs, and photo-engraved portraits.</div><div class="custom-footer"><div class="custom-price">from $65 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
         </div>
         <div class="custom-card" onclick="openCustomOrderApp('business','Business Signs','🏢',65,'Professional office and storefront signs in real wood.')">
           <div class="custom-visual" style="background:linear-gradient(135deg,#0a0a1a,#0e0e0e)">🏢</div><div class="custom-body"><div class="custom-name">Business Signs</div><div class="custom-desc">Door signs, reception plaques, award plaques, and lobby signage.</div><div class="custom-footer"><div class="custom-price">from $65 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
@@ -696,7 +696,7 @@ body {
             <option value="">Select a product...</option>
             <option>Custom Wood Sign</option><option>Address Plaque</option>
             <option>Family Name Sign</option>
-            <option>Memorial Sign / Plaque</option><option>Business Sign</option>
+            <option>Memorial Sign / Plaque</option><option>Pet Memorial Plaque</option><option>Business Sign</option>
             <option>Cutting / Serving Board</option><option>Bottle Opener / Cap Catcher</option>
             <option>Coaster Set</option><option>Custom Keychain</option>
             <option>Christmas Ornament</option>
@@ -866,9 +866,9 @@ body {
     </div>
     <div class="about-hero">
       <div class="about-headline">A CNC machine, a laser, and a love for <em>making things that matter.</em></div>
-      <p class="about-body">SieCraft is a small CNC and laser shop in Orlando, started in 2024 by a maker who likes turning raw wood into something people keep.</p>
+      <p class="about-body">SieCraft LLC has been an Orlando business since 2018. Our CNC and laser shop turns raw wood into pieces people keep.</p>
       <p class="about-body">Today we run a CNC router and a laser engraver, producing custom wood signs, serving boards, memorial pieces, and anything else a customer can dream up. Every order is personal. Every piece is made to order.</p>
-      <div class="about-sig">The SieCraft Team<span>Orlando, Florida · Est. 2024</span></div>
+      <div class="about-sig">The SieCraft Team<span>Orlando, Florida · Est. 2018</span></div>
     </div>
     <div class="about-grid">
       <div class="about-card"><div class="about-card-icon">🪵</div><div class="about-card-title">Real Wood Materials</div><div class="about-card-desc">Maple, pine, cedar, walnut — sourced and finished in-house.</div></div>
@@ -1064,12 +1064,13 @@ function showTab(id) {
 var PRICING_DATA = [
   {emoji:'🏡',name:'Address Plaque',price:'$45–$90',cat:'signs',desc:'Cedar outdoor or walnut indoor. House number + street name.'},
   {emoji:'🪵',name:'Family Name Sign',price:'$55–$110',cat:'signs',desc:'"The [Name] Family" — multiple sizes and wood options.'},
-  {emoji:'🕊️',name:'Memorial Sign',price:'$75–$220',cat:'signs',desc:'Indoor plaques, outdoor garden signs, photo-engraved portraits.'},
+  {emoji:'🕊️',name:'Memorial Sign',price:'$65–$180',cat:'signs',desc:'Indoor plaques and outdoor garden signs.'},
+  {emoji:'🐾',name:'Pet Memorial Plaque',price:'$45–$90',cat:'signs',desc:'Your pet\'s name, dates and a short message. Indoor plaque or garden sign.'},
   {emoji:'🖼️',name:'Custom Quote Sign',price:'$55–$130',cat:'signs',desc:'Any text, any size. Routed or laser engraved in real wood.'},
   {emoji:'🪓',name:'Cutting Board',price:'$45–$75',cat:'laser',desc:'Personalized solid maple board — names, dates, or artwork.'},
   {emoji:'🪵',name:'Coaster Set (4-pack)',price:'$30–$50',cat:'laser',desc:'Set of 4 engraved wood coasters. Custom design.'},
   {emoji:'🔑',name:'Custom Keychain',price:'$8–$18',cat:'laser',desc:'Laser-cut wood with name, logo, or custom shape.'},
-  {emoji:'🏢',name:'Office Door Sign',price:'$65–$120',cat:'business',desc:'Professional name or room signs for offices.'},
+  {emoji:'🏢',name:'Office Door Sign',price:'$45–$95',cat:'business',desc:'Professional name or room signs for offices.'},
   {emoji:'🏆',name:'Award Plaque',price:'$65–$150',cat:'business',desc:'Recognition and achievement plaques.'},
   {emoji:'🎄',name:'Christmas Ornament',price:'$15–$28',cat:'seasonal',desc:'Personalized laser-cut wood ornaments.'},
 ];
