@@ -31,7 +31,7 @@
   --border:   #1e1e2e;
   --text:     #f0f0f0;
   --muted:    #999;
-  --dim:      #555;
+  --dim:      #8a8a8a;
   --green:    #2d8a5e;
   --gold:     #f0a500;
   --header-h: 58px;
@@ -80,7 +80,7 @@ body {
   cursor: pointer; transition: all .2s; white-space: nowrap;
   text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
 }
-.hdr-btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--muted); }
+.hdr-btn-outline { background: transparent; border: 1.5px solid #3a3a40; color: #e4e4e7; }
 .hdr-btn-outline:hover { border-color: #444; color: #ddd; }
 .hdr-btn-red { background: var(--red); color: #fff; }
 .hdr-btn-red:hover { background: #ff3838; }
@@ -91,7 +91,7 @@ body {
   position: fixed;
   top: var(--header-h); left: 0; right: 0;
   height: var(--nav-h);
-  background: rgba(8,8,8,.94);
+  background: rgba(14,14,16,.97);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -110,17 +110,17 @@ body {
   border-radius: 20px;
   border: none;
   background: transparent;
-  color: var(--dim);
+  color: #e4e4e7;
   cursor: pointer;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   transition: all .2s;
   white-space: nowrap;
   flex-shrink: 0;
   display: flex; align-items: center; gap: 5px;
 }
-.tab-pill:hover { background: rgba(255,255,255,.06); color: var(--muted); }
+.tab-pill:hover { background: rgba(255,255,255,.12); color: #fff; }
 .tab-pill.active {
   background: var(--red);
   color: #fff;
@@ -443,10 +443,10 @@ body {
 .footer-desc { font-size:12px;color:var(--dim);line-height:1.7;margin-top:6px; }
 .footer-col-title { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin-bottom:12px; }
 .footer-links { display:flex;flex-direction:column;gap:8px; }
-.footer-links a { font-size:13px;color:#555;text-decoration:none;transition:color .2s; }
+.footer-links a { font-size:13px;color:#b4b4b8;text-decoration:none;transition:color .2s; }
 .footer-links a:hover { color:var(--red); }
 .footer-bottom { max-width:900px;margin:24px auto 0;padding-top:20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap; }
-.footer-copy { font-size:11px;color:#333; }
+.footer-copy { font-size:12px;color:#8a8a8a; }
 .footer-social { display:flex;gap:8px; }
 .social-link { width:32px;height:32px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;text-decoration:none;transition:all .2s; }
 .social-link:hover { border-color:var(--red);background:rgba(212,32,32,.1); }
@@ -486,6 +486,8 @@ body {
 @media (max-width:600px) {
   :root { --header-h:52px; --nav-h:48px; }
   .header-tagline { display:none; }
+  .hdr-phone-num { display:none; }
+  .tab-nav { -webkit-mask-image: linear-gradient(90deg,#000 85%,transparent); mask-image: linear-gradient(90deg,#000 85%,transparent); }
   .footer-inner { grid-template-columns:1fr; }
   .form-grid { grid-template-columns:1fr; }
   .bulk-grid { grid-template-columns:repeat(3,1fr); }
@@ -507,7 +509,7 @@ body {
     </div>
   </a>
   <div class="header-right">
-    <a href="tel:+19293710501" class="hdr-btn hdr-btn-outline">📱 (929) 371-0501</a>
+    <a href="tel:+19293710501" class="hdr-btn hdr-btn-outline" aria-label="Call (929) 371-0501">📱<span class="hdr-phone-num"> (929) 371-0501</span></a>
     <button class="hdr-btn hdr-btn-red" onclick="showTab('order')">Get a Quote →</button>
   </div>
 </header>
