@@ -621,7 +621,7 @@ body {
     <div class="panel-title-row">
       <div class="panel-tag">Shop SieCraft</div>
       <h2 class="panel-h2">BUY <em>DIRECT</em></h2>
-      <p class="panel-sub">Ready-to-ship pieces and custom orders — all secured by Stripe.</p>
+      <p class="panel-sub">Personalized gifts you can buy now, plus custom orders — all secured by Stripe.</p>
     </div>
     <div class="stripe-trust">
       <div class="st-item"><span>🔒</span> Stripe Secured</div>
@@ -630,7 +630,7 @@ body {
       <div class="st-item"><span>📍</span> Free local pickup · Ships anywhere</div>
     </div>
     <div class="shop-tabs-row">
-      <button class="shop-tab-btn active" id="shop-tab-premade" onclick="switchShopTab('premade',this)">🛍️ Ready to Ship</button>
+      <button class="shop-tab-btn active" id="shop-tab-premade" onclick="switchShopTab('premade',this)">🛍️ Buy Now</button>
       <button class="shop-tab-btn"        id="shop-tab-custom" onclick="switchShopTab('custom',this)">✏️ Custom Orders</button>
     </div>
     <div id="shop-premade-wrap">
@@ -1140,7 +1140,7 @@ function loadShopApp() {
       return '<div class="shop-card">'
         +'<div class="shop-card-img" onclick="openQVApp(\''+escHtml(p.id)+'\')">'
         +imgHTML+'<span class="shop-card-badge '+stockClass+'">'+stockLabel+'</span></div>'
-        +'<div class="shop-card-body"><div class="sc-cat">'+escHtml(p.category||'Ready to ship')+'</div>'
+        +'<div class="shop-card-body"><div class="sc-cat">'+escHtml(p.category||'Buy Now')+'</div>'
         +'<div class="sc-name">'+escHtml(p.name)+'</div>'
         +'<div class="sc-desc">'+escHtml(p.description||'')+'</div>'
         +'<div class="sc-footer"><div class="sc-price">$'+Number(p.price).toFixed(2).replace(/\.00$/,'')+'</div>'
@@ -1158,7 +1158,7 @@ function openQVApp(id) {
   qvItem = p;
   var imgEl = document.getElementById('qva-img');
   imgEl.innerHTML = p.image ? '<img src="'+escHtml(p.image)+'" alt="'+escHtml(p.name)+'">' : '<span style="font-size:72px;">'+escHtml(p.emoji||'🪵')+'</span>';
-  document.getElementById('qva-cat').textContent = p.category||'Ready to ship';
+  document.getElementById('qva-cat').textContent = p.category||'Buy Now';
   document.getElementById('qva-name').textContent = p.name;
   document.getElementById('qva-price').textContent = '$'+p.price;
   document.getElementById('qva-desc').textContent = p.description||'';
