@@ -4,7 +4,9 @@
 // Every price is looked up here, server-side, from products.json, so a
 // customer can't change what they pay by editing the page.
 //
-// Env vars: STRIPE_SECRET_KEY (required), SITE_URL (optional)
+// Env vars: STRIPE_SECRET_KEY (required), SITE_URL (optional),
+// STRIPE_TAX_RATE_ID (optional: a Stripe Tax Rate, e.g. Florida 6.5%, applied
+// by customer address to Buy Now items and deposits).
 
 const Stripe = require('stripe');
 const catalog = require('../products.json');
@@ -23,18 +25,21 @@ module.exports = async (req, res) => {
 
   const body = req.body || {};
   const email = clip(body.customerEmail, 200).trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  // Deposits need the email up front; Buy Now lets Stripe collect it.
+  if (body.kind !== 'premade' && !emailOk) {
     res.status(400).json({ error: 'A valid email is required.' });
     return;
   }
 
-  let lineItem, kind, productName;
+  let lineItem, kind, productName, extra = {};
 
   if (body.kind === 'premade') {
     const item = (catalog.premade || []).find(p => p.id === body.id && p.visible !== false);
     if (!item) { res.status(400).json({ error: 'That item is no longer available.' }); return; }
-    if (!(item.stock > 0)) { res.status(400).json({ error: 'That item is sold out.' }); return; }
-    const qty = Math.max(1, Math.min(parseInt(body.quantity, 10) || 1, item.stock, 25));
+    const made = item.madeToOrder === true;
+    if (!made && !(item.stock > 0)) { res.status(400).json({ error: 'That item is sold out.' }); return; }
+    const maxQty = made ? 20 : Math.min(item.stock, 20);
     kind = 'premade';
     productName = item.name;
     lineItem = {
@@ -43,8 +48,25 @@ module.exports = async (req, res) => {
         product_data: { name: item.name, description: clip(item.description, 500) || undefined },
         unit_amount: Math.round(item.price * 100)
       },
-      quantity: qty
+      quantity: 1,
+      adjustable_quantity: { enabled: true, minimum: 1, maximum: maxQty }
     };
+    const ship = catalog.shipping || {};
+    extra.shipping_address_collection = { allowed_countries: ['US'] };
+    extra.shipping_options = [
+      { shipping_rate_data: { type: 'fixed_amount', display_name: clip(ship.pickupLabel || 'Free local pickup (Orlando)', 100),
+          fixed_amount: { amount: 0, currency: 'usd' } } },
+      { shipping_rate_data: { type: 'fixed_amount', display_name: clip(ship.label || 'USPS shipping (US)', 100),
+          fixed_amount: { amount: Math.round((ship.flat || 6) * 100), currency: 'usd' } } }
+    ];
+    const fields = (item.personalize || []).slice(0, 3).map(f => ({
+      key: String(f.key).replace(/[^a-zA-Z0-9]/g, '').slice(0, 200) || 'text',
+      label: { type: 'custom', custom: clip(f.label, 50) },
+      type: 'text',
+      optional: !!f.optional,
+      text: { maximum_length: Math.min(Math.max(parseInt(f.max, 10) || 60, 1), 255) }
+    }));
+    if (fields.length) extra.custom_fields = fields;
   } else {
     const item = (catalog.custom || []).find(p => p.id === body.id);
     if (!item) { res.status(400).json({ error: 'Unknown product.' }); return; }
@@ -70,9 +92,12 @@ module.exports = async (req, res) => {
     const site = process.env.SITE_URL || 'https://siecraft.com';
     const who = clip(body.customerName, 80).trim() || email;
     const description = clip(`${kind === 'deposit' ? 'Deposit' : 'Order'}: ${productName} - ${who}`, 300);
+    const taxRate = process.env.STRIPE_TAX_RATE_ID;
+    if (taxRate) lineItem.dynamic_tax_rates = [taxRate];
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      customer_email: email,
+      ...(emailOk ? { customer_email: email } : {}),
+      ...extra,
       // Save a Customer so name/email show on every payment in the dashboard.
       customer_creation: 'always',
       payment_intent_data: {

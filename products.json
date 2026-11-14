@@ -1,5 +1,5 @@
 {
-  "_readme": "Single source of truth for prices. The server reads this file to compute every charge, so the browser can never set a price. 'from' is the starting price for custom work; the deposit is depositRate x from. Premade items are charged their full price. To sell a ready-made item, add it to 'premade' (image goes in /img/shop/). Set 'visible' to false to hide one.",
+  "_readme": "Single source of truth for prices. The server reads this file to compute every charge, so the browser can never set a price. 'from' is the starting price for custom work; the deposit is depositRate x from. Premade items are charged their full price. To sell a ready-made item, add it to 'premade' (image goes in /img/shop/). Set 'visible' to false to hide one. Buy Now ('premade') items with madeToOrder:true have no stock limit. 'personalize' fields (max 3) are asked on Stripe's checkout page. 'shopOpen' false hides Buy Now on siecraft.com (preview links still show it for testing).",
   "depositRate": 0.5,
   "custom": [
     {
@@ -31,5 +31,87 @@
       "summary": "Keychains, cutting boards, coasters, ornaments."
     }
   ],
-  "premade": []
+  "premade": [
+    {
+      "id": "xmas-ornament",
+      "name": "Personalized Christmas Ornament",
+      "emoji": "🎄",
+      "category": "Christmas",
+      "price": 18,
+      "madeToOrder": true,
+      "description": "About 3.5\" wood ornament with a name and year, cut and engraved in Orlando. Ready to hang.",
+      "personalize": [
+        {
+          "key": "names",
+          "label": "Name(s) and year",
+          "max": 60
+        }
+      ]
+    },
+    {
+      "id": "keychain",
+      "name": "Engraved Wood Keychain",
+      "emoji": "🔑",
+      "category": "Gifts",
+      "price": 12,
+      "madeToOrder": true,
+      "description": "Wood keychain engraved with a name or initials.",
+      "personalize": [
+        {
+          "key": "text",
+          "label": "Name or initials",
+          "max": 20
+        }
+      ]
+    },
+    {
+      "id": "coaster-set",
+      "name": "Engraved Coaster Set (4)",
+      "emoji": "☕",
+      "category": "Gifts",
+      "price": 40,
+      "madeToOrder": true,
+      "description": "Set of 4 wood coasters engraved with a name, initials or short text.",
+      "personalize": [
+        {
+          "key": "text",
+          "label": "Name, initials or short text",
+          "max": 40
+        }
+      ]
+    },
+    {
+      "id": "garden-stake",
+      "name": "Garden Memorial Stake",
+      "emoji": "🐾",
+      "category": "Memorial",
+      "price": 35,
+      "madeToOrder": true,
+      "description": "Cedar garden stake carved with a name and years, sealed for outdoors. About 6.5\" × 17\".",
+      "personalize": [
+        {
+          "key": "name",
+          "label": "Name",
+          "max": 24
+        },
+        {
+          "key": "years",
+          "label": "Years (e.g. 2012-2024)",
+          "max": 20
+        },
+        {
+          "key": "line",
+          "label": "Short line (optional)",
+          "max": 30,
+          "optional": true
+        }
+      ]
+    }
+  ],
+  "shopOpen": false,
+  "shipping": {
+    "flat": 6,
+    "label": "USPS shipping (US)",
+    "pickupLabel": "Free local pickup (Orlando)"
+  }
 }

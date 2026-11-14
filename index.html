@@ -1029,8 +1029,10 @@ body {
       <div class="qv-name" id="qva-name"></div>
       <div class="qv-price" id="qva-price"></div>
       <div class="qv-desc" id="qva-desc"></div>
+      <div id="qva-note" style="font-size:13px;color:var(--muted);margin:-4px 0 12px;"></div>
       <a class="qv-buy" id="qva-buy" href="#shop" onclick="buyPremade(event)">🔒 Buy Now</a>
-      <div style="font-size:12px;color:var(--dim);text-align:center;margin-top:10px;">Secure checkout · Free local pickup available</div>
+      <div id="qva-err" style="display:none;font-size:13px;color:#fca5a5;margin-top:10px;"></div>
+      <div style="font-size:12px;color:var(--dim);text-align:center;margin-top:10px;">Secure checkout by Stripe · Free local pickup in Orlando or $6 USPS shipping · <a href="/policies#buynow" style="color:inherit;">Policy</a></div>
     </div>
   </div>
 </div>
@@ -1119,7 +1121,9 @@ function loadShopApp() {
   getCatalog().then(function(cat){
     var grid = document.getElementById('premade-grid-app');
     if (!grid) return;
-    var products = (cat.premade||[]).filter(function(p){ return p.visible!==false; });
+    // Buy Now stays hidden on siecraft.com until shopOpen is true (preview links still show it).
+    var liveHost = /(^|\.)siecraft\.com$/.test(location.hostname);
+    var products = (cat.shopOpen || !liveHost) ? (cat.premade||[]).filter(function(p){ return p.visible!==false; }) : [];
     if (!products.length) {
       // Nothing ready-made yet: open straight to Custom Orders.
       var premadeTab = document.getElementById('shop-tab-premade');
@@ -1128,8 +1132,9 @@ function loadShopApp() {
       return;
     }
     grid.innerHTML = products.map(function(p){
-      var stockClass = p.stock>5?'badge-in':p.stock>0?'badge-low':'badge-out';
-      var stockLabel = p.stock>5?'In Stock':p.stock>0?'Only '+p.stock+' left':'Sold Out';
+      var avail = p.madeToOrder || p.stock>0;
+      var stockClass = p.madeToOrder?'badge-in':p.stock>5?'badge-in':p.stock>0?'badge-low':'badge-out';
+      var stockLabel = p.madeToOrder?'Made to order':p.stock>5?'In Stock':p.stock>0?'Only '+p.stock+' left':'Sold Out';
       var imgHTML = p.image?'<img src="'+escHtml(p.image)+'" alt="'+escHtml(p.name)+'" loading="lazy">'
         :'<span style="font-size:44px;">'+escHtml(p.emoji||'🪵')+'</span>';
       return '<div class="shop-card">'
@@ -1139,7 +1144,7 @@ function loadShopApp() {
         +'<div class="sc-name">'+escHtml(p.name)+'</div>'
         +'<div class="sc-desc">'+escHtml(p.description||'')+'</div>'
         +'<div class="sc-footer"><div class="sc-price">$'+Number(p.price).toFixed(2).replace(/\.00$/,'')+'</div>'
-        +(p.stock>0?'<button class="btn-buy-sm" onclick="event.stopPropagation();openQVApp(\''+escHtml(p.id)+'\')">Buy Now</button>'
+        +(avail?'<button class="btn-buy-sm" onclick="event.stopPropagation();openQVApp(\''+escHtml(p.id)+'\')">Buy Now</button>'
           :'<button class="btn-buy-sm" disabled>Sold Out</button>')
         +'</div></div></div>';
     }).join('');
@@ -1157,19 +1162,31 @@ function openQVApp(id) {
   document.getElementById('qva-name').textContent = p.name;
   document.getElementById('qva-price').textContent = '$'+p.price;
   document.getElementById('qva-desc').textContent = p.description||'';
+  var avail = p.madeToOrder || p.stock>0;
   var buyBtn = document.getElementById('qva-buy');
-  buyBtn.style.opacity = p.stock>0 ? '1' : '.4';
-  buyBtn.style.pointerEvents = p.stock>0 ? 'auto' : 'none';
+  buyBtn.style.opacity = avail ? '1' : '.4';
+  buyBtn.style.pointerEvents = avail ? 'auto' : 'none';
+  buyBtn.innerHTML = '🔒 Buy Now';
+  var fields = (p.personalize||[]).map(function(f){ return f.label; });
+  document.getElementById('qva-note').textContent = fields.length ? 'You\'ll enter: '+fields.join(', ')+' on the secure checkout page.' : '';
+  document.getElementById('qva-err').style.display = 'none';
   document.getElementById('qv-modal-app').classList.add('open');
 }
 
 function buyPremade(e) {
   if (e) e.preventDefault();
   var p = qvItem; if (!p) return;
-  if (p.stripeLink) { window.location.href = p.stripeLink; return; }
-  // No Stripe payment link set for this item yet: send them to the quote form.
-  document.getElementById('qv-modal-app').classList.remove('open');
-  showTab('order');
+  var btn = document.getElementById('qva-buy'), err = document.getElementById('qva-err');
+  btn.style.pointerEvents = 'none'; btn.textContent = 'Opening secure checkout…'; err.style.display = 'none';
+  fetch('/api/checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ kind:'premade', id:p.id }) })
+    .then(function(r){ return r.json().catch(function(){ return {}; }); })
+    .then(function(d){
+      if (d && d.url) { window.location.href = d.url; return; }
+      btn.style.pointerEvents = 'auto'; btn.innerHTML = '🔒 Buy Now';
+      err.innerHTML = (d && d.error ? escHtml(d.error)+' ' : 'Checkout is unavailable right now. ') + 'Text <a href="tel:+19293710501" style="color:#fff;">(929) 371-0501</a> to order.';
+      err.style.display = 'block';
+    })
+    .catch(function(){ btn.style.pointerEvents = 'auto'; btn.innerHTML = '🔒 Buy Now'; err.textContent = 'Connection problem. Please try again.'; err.style.display = 'block'; });
 }
 
 function switchShopTab(tab, btn) {

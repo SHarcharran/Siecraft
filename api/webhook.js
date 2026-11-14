@@ -41,6 +41,24 @@ async function handler(req, res) {
     const m = session.metadata || {};
     const paidEmail = (session.customer_details && session.customer_details.email) || '';
     const amount = ((session.amount_total || 0) / 100).toFixed(2);
+    const cd = session.customer_details || {};
+    const ship = session.shipping_details || (session.collected_information && session.collected_information.shipping_details) || null;
+    const shipCents = (session.total_details && session.total_details.amount_shipping) || 0;
+    const taxCents = (session.total_details && session.total_details.amount_tax) || 0;
+    const fields = (session.custom_fields || []).map(f => `${(f.label && f.label.custom) || f.key}: ${(f.text && f.text.value) || '(blank)'}`);
+    const a = ship && ship.address;
+    let qtyLine = '';
+    if (m.kind === 'premade' && process.env.STRIPE_SECRET_KEY) {
+      try {
+        const li = await Stripe(process.env.STRIPE_SECRET_KEY).checkout.sessions.listLineItems(session.id, { limit: 10 });
+        qtyLine = li.data.map(x => `${x.quantity} x ${x.description}`).join('; ');
+      } catch (e) { console.error('line items lookup failed:', e && e.message); }
+    }
+    const shipLines = m.kind === 'premade' ? [
+      '',
+      shipCents > 0 ? `Delivery: SHIP ($${(shipCents / 100).toFixed(2)} paid)` : 'Delivery: LOCAL PICKUP',
+      ...(shipCents > 0 && a ? [`Ship to: ${ship.name || ''}`, `${a.line1 || ''}${a.line2 ? ', ' + a.line2 : ''}`, `${a.city || ''}, ${a.state || ''} ${a.postal_code || ''}`] : [])
+    ] : [];
 
     try {
       const r = await fetch('https://api.resend.com/emails', {
@@ -58,17 +76,16 @@ async function handler(req, res) {
             'New SieCraft payment received.',
             '',
             `Product: ${m.product || ''}`,
-            `Customer: ${m.customerName || ''}`,
+            ...(qtyLine ? [`Quantity: ${qtyLine}`] : []),
+            `Customer: ${m.customerName || cd.name || ''}`,
             `Email: ${paidEmail}`,
-            `Phone: ${m.customerPhone || (session.customer_details && session.customer_details.phone) || ''}`,
+            `Phone: ${m.customerPhone || cd.phone || ''}`,
+            ...(m.kind === 'premade'
+              ? ['', 'Personalization:', ...(fields.length ? fields : ['(none)'])]
+              : ['', `Material: ${m.material || ''}`, `Size: ${m.size || ''}`, '', `Personalization: ${m.personalization || ''}`, `Notes: ${m.notes || ''}`]),
+            ...shipLines,
             '',
-            `Material: ${m.material || ''}`,
-            `Size: ${m.size || ''}`,
-            '',
-            `Personalization: ${m.personalization || ''}`,
-            `Notes: ${m.notes || ''}`,
-            '',
-            `Amount paid${m.kind === 'premade' ? '' : ' (50% deposit on starting price)'}: $${amount}`,
+            `Amount paid${m.kind === 'premade' ? '' : ' (50% deposit on starting price)'}: $${amount}${taxCents ? ` (includes $${(taxCents / 100).toFixed(2)} sales tax)` : ''}`,
             `Stripe session: ${session.id}`
           ].join('\n')
         })
