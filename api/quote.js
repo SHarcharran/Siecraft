@@ -24,6 +24,16 @@ function niceDate(v) {
   return isNaN(d) ? v : d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 }
 
+// Short, human-friendly reference: Q-MMDD-XXXX (no 0/O/1/I to avoid misreading).
+function quoteRef() {
+  const d = new Date();
+  const mmdd = String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCDate()).padStart(2, '0');
+  const abc = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let r = '';
+  for (let i = 0; i < 4; i++) r += abc[Math.floor(Math.random() * abc.length)];
+  return `Q-${mmdd}-${r}`;
+}
+
 async function sendEmail(payload) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -89,8 +99,10 @@ module.exports = async (req, res) => {
   const to = process.env.ORDER_EMAIL || 'SieCraftcnc@gmail.com';
   const copy = (process.env.QUOTE_COPY_EMAIL || '').trim();
 
+  const ref = quoteRef();
   const ownerText = [
     'NEW QUOTE REQUEST — siecraft.com',
+    `Quote #: ${ref}`,
     '',
     `Name: ${q.name}`,
     `Email: ${q.email}`,
@@ -120,7 +132,7 @@ module.exports = async (req, res) => {
       to: [to],
       ...(copy && copy.toLowerCase() !== to.toLowerCase() ? { bcc: [copy] } : {}),
       reply_to: q.email,
-      subject: `Quote request: ${q.type || 'Custom order'} from ${q.name}${q.deadline !== 'No date given' ? ` (needed by ${q.deadlineNice || q.deadline})` : ''}`,
+      subject: `Quote request ${ref}: ${q.type || 'Custom order'} from ${q.name}${q.deadline !== 'No date given' ? ` (needed by ${q.deadlineNice || q.deadline})` : ''}`,
       text: ownerText,
       attachments: attachments.length ? attachments : undefined
     });
@@ -137,16 +149,18 @@ module.exports = async (req, res) => {
       from,
       to: [q.email],
       reply_to: to,
-      subject: 'We got your SieCraft quote request',
+      subject: `We got your SieCraft quote request (${ref})`,
       text: [
         `Hi ${clip(b.fname, 40).replace(/[^\p{L}\p{M}' .-]/gu, '') || 'there'},`,
         '',
         `Thanks for reaching out about a ${q.type || 'custom piece'}. Your request reached us, and we'll reply with your free design proof and an exact price.`,
         '',
+        `Your quote number is ${ref}. Mention it if you call or text.`,
+        '',
         'Need it sooner, or want to add something? Just reply to this email or text (929) 371-0501.',
         '',
         'SieCraft',
-        'Handmade in Orlando, FL · siecraft.com'
+        'Made in Orlando, FL · siecraft.com'
       ].join('\n')
     });
   } catch (err) {
