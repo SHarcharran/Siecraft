@@ -1356,15 +1356,22 @@ function toggleFaqApp(i) {
   function fill(id,list){var el=document.getElementById(id);if(!el)return;var cur=el.value;el.innerHTML=list.map(function(o){return '<option>'+o+'</option>';}).join('');if(list.indexOf(cur)>=0)el.value=cur;}
   var t=document.getElementById('o-type');if(!t)return;
   function apply(){var r=RULES[t.value]||{};fill('o-material',r.wood||ALL_WOOD);fill('o-size',r.size||ALL_SIZE);fill('o-finish',r.fin||ALL_FIN);}
-  t.addEventListener('change',apply);apply();
+  window.applyProductRules=apply;
+  ['change','input'].forEach(function(ev){t.addEventListener(ev,apply);});
+  ['material','size','finish'].forEach(function(k){var el=document.getElementById('o-'+k);if(el)el.addEventListener('focus',apply);});
+  window.addEventListener('pageshow',function(){setTimeout(apply,0);});
+  window.addEventListener('load',function(){setTimeout(apply,0);});
+  apply();
 })();
 var orderStep = 1;
 function orderNext(step) {
   if (step===1) {
     if (!document.getElementById('o-fname').value.trim()||!document.getElementById('o-email').value.trim()||!document.getElementById('o-phone').value.trim()) { alert('Please fill in your name, email, and phone.'); return; }
   }
+  if (step===1 && window.applyProductRules) window.applyProductRules();
   if (step===2) {
     if (!document.getElementById('o-type').value) { alert('Please select a product type.'); return; }
+    if (window.applyProductRules) window.applyProductRules();
   }
   if (step===3) {
     if (!document.getElementById('o-text').value.trim()) { document.getElementById('o-text').focus(); return; }
