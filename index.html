@@ -745,8 +745,9 @@ body {
           <textarea class="form-textarea" id="o-text" placeholder="Exactly what you want engraved. Names, dates, addresses, quotes..."></textarea>
         </div>
         <div class="form-group full">
-          <label class="form-label">Need it by a date? (optional)</label>
-          <input class="form-input" id="o-deadline" maxlength="60" placeholder="e.g. Dec 20, or for a party on the 14th">
+          <label class="form-label" for="o-deadline">Need it by a date? (optional)</label>
+          <input class="form-input" id="o-deadline" type="date" style="color-scheme:dark">
+          <script>(function(){var d=new Date();d.setDate(d.getDate()+1);var el=document.getElementById('o-deadline');if(el)el.min=d.toISOString().slice(0,10);})();</script>
         </div>
         <div class="form-group full"><label class="form-label" for="o-photos">Photos or logo (optional, up to 3)</label>
           <input class="form-input" id="o-photos" type="file" accept="image/jpeg,image/png,image/webp,image/heic" multiple>
@@ -1358,7 +1359,7 @@ function orderNext(step) {
       ['Material', document.getElementById('o-material').value],
       ['Size', document.getElementById('o-size').value],
       ['Qty', document.getElementById('o-qty').value],
-      ['Needed by', document.getElementById('o-deadline').value || 'No date given'],
+      ['Needed by', (function(v){if(!v)return 'No date given';var d=new Date(v+'T12:00:00');return isNaN(d)?v:d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});})(document.getElementById('o-deadline').value)],
       ['Personalization', document.getElementById('o-text').value],
     ].map(function(r){ return '<div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--dim);width:110px;flex-shrink:0;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">'+r[0]+'</span><span style="color:#ccc;font-weight:600;word-break:break-word;">'+r[1]+'</span></div>'; }).join('');
   }

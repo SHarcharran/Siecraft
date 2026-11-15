@@ -17,6 +17,13 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
 
 const clip = (v, n) => String(v == null ? '' : v).trim().slice(0, n);
 
+// "2026-12-10" -> "Thu, Dec 10, 2026"; anything else is returned as typed.
+function niceDate(v) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(v || '')) return v || '';
+  const d = new Date(v + 'T12:00:00Z');
+  return isNaN(d) ? v : d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+}
+
 async function sendEmail(payload) {
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -54,6 +61,7 @@ module.exports = async (req, res) => {
     qty: clip(b.qty, 40),
     finish: clip(b.finish, 100),
     deadline: clip(b.deadline, 60) || 'No date given',
+    deadlineNice: niceDate(clip(b.deadline, 60)),
     text: clip(b.text, 3000),
     notes: clip(b.notes, 3000)
   };
@@ -93,7 +101,7 @@ module.exports = async (req, res) => {
     `Size: ${q.size}`,
     `Quantity: ${q.qty}`,
     `Finish: ${q.finish}`,
-    `Needed by: ${q.deadline}`,
+    `Needed by: ${q.deadline}${q.deadlineNice && q.deadlineNice !== q.deadline ? ` (${q.deadlineNice})` : ''}`,
     '',
     'PERSONALIZATION:',
     q.text,
@@ -112,7 +120,7 @@ module.exports = async (req, res) => {
       to: [to],
       ...(copy && copy.toLowerCase() !== to.toLowerCase() ? { bcc: [copy] } : {}),
       reply_to: q.email,
-      subject: `Quote request: ${q.type || 'Custom order'} from ${q.name}${q.deadline !== 'No date given' ? ` (needed by ${q.deadline})` : ''}`,
+      subject: `Quote request: ${q.type || 'Custom order'} from ${q.name}${q.deadline !== 'No date given' ? ` (needed by ${q.deadlineNice || q.deadline})` : ''}`,
       text: ownerText,
       attachments: attachments.length ? attachments : undefined
     });
