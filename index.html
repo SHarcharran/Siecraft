@@ -721,7 +721,7 @@ body {
         <div class="form-group"><label class="form-label">Size</label>
           <select class="form-select" id="o-size">
             <option>Small — up to 8"×6"</option><option>Medium — up to 16"×10"</option>
-            <option>Large — up to 24"×18"</option><option>Custom — I'll specify</option>
+            <option>Large — up to 24"×18"</option><option>Custom — up to 24" max (add size in notes)</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label">Finish</label>
@@ -772,7 +772,7 @@ body {
       </div>
       <div class="step-nav">
         <button class="btn btn-ghost" onclick="orderBack(4)">← Back</button>
-        <button class="btn btn-primary" id="o-submit" style="flex:1;font-size:15px;" onclick="submitOrder()">🚀 Submit Order Request</button>
+        <button class="btn btn-primary" id="o-submit" style="flex:1;font-size:15px;" onclick="submitOrder()">🚀 Send Quote Request</button>
       </div>
       <div id="o-error" role="alert" style="display:none;margin-top:14px;background:rgba(212,32,32,.08);border:1px solid rgba(212,32,32,.35);border-radius:10px;padding:14px;font-size:13px;color:#e8b4b4;line-height:1.7;"></div>
     </div>
@@ -1339,6 +1339,25 @@ function toggleFaqApp(i) {
 // ═══════════════════════════════════════════
 // ORDER FORM
 // ═══════════════════════════════════════════
+
+// Product-aware options: only offer woods, sizes and finishes that make sense for the product.
+(function(){
+  var ALL_WOOD=['Not sure — advise me','Pine','Cedar','Walnut','Maple'];
+  var ALL_SIZE=['Small — up to 8"×6"','Medium — up to 16"×10"','Large — up to 24"×18"','Custom — up to 24" max (add size in notes)'];
+  var ALL_FIN=['Natural / Raw','Stain + Seal','Painted','Outdoor Weather Seal','Not sure'];
+  var RULES={
+    'Cutting / Serving Board':{wood:['Maple','Walnut','Not sure — advise me'],size:['Small — about 12"×9"','Medium — about 16"×11"','Large — up to 20"×14"','Custom — up to 24" max (add size in notes)'],fin:['Food-safe oil finish']},
+    'Coaster Set':{wood:['Maple','Walnut','Not sure — advise me'],size:['Standard — 4" coasters, set of 4'],fin:['Natural / Raw','Stain + Seal','Not sure']},
+    'Christmas Ornament':{size:['Standard — about 3.5"'],fin:['Natural / Raw','Painted','Not sure']},
+    'Custom Keychain':{size:['Standard — about 2–3"'],fin:['Natural / Raw','Stain + Seal','Not sure']},
+    'Address Plaque':{wood:['Cedar','Not sure — advise me','Maple','Walnut'],fin:['Outdoor Weather Seal','Painted','Stain + Seal','Not sure']},
+    'Bottle Opener / Cap Catcher':{wood:['Maple','Walnut','Not sure — advise me'],size:['Standard — about 12"×6"','Custom — up to 24" max (add size in notes)']}
+  };
+  function fill(id,list){var el=document.getElementById(id);if(!el)return;var cur=el.value;el.innerHTML=list.map(function(o){return '<option>'+o+'</option>';}).join('');if(list.indexOf(cur)>=0)el.value=cur;}
+  var t=document.getElementById('o-type');if(!t)return;
+  function apply(){var r=RULES[t.value]||{};fill('o-material',r.wood||ALL_WOOD);fill('o-size',r.size||ALL_SIZE);fill('o-finish',r.fin||ALL_FIN);}
+  t.addEventListener('change',apply);apply();
+})();
 var orderStep = 1;
 function orderNext(step) {
   if (step===1) {
@@ -1359,9 +1378,10 @@ function orderNext(step) {
       ['Material', document.getElementById('o-material').value],
       ['Size', document.getElementById('o-size').value],
       ['Qty', document.getElementById('o-qty').value],
+      ['Finish', document.getElementById('o-finish').value],
       ['Needed by', (function(v){if(!v)return 'No date given';var d=new Date(v+'T12:00:00');return isNaN(d)?v:d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});})(document.getElementById('o-deadline').value)],
       ['Personalization', document.getElementById('o-text').value],
-    ].map(function(r){ return '<div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--dim);width:110px;flex-shrink:0;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">'+r[0]+'</span><span style="color:#ccc;font-weight:600;word-break:break-word;">'+r[1]+'</span></div>'; }).join('');
+    ].map(function(r){ return '<div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--dim);width:110px;flex-shrink:0;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">'+r[0]+'</span><span style="color:#ccc;font-weight:600;word-break:break-word;">'+String(r[1]).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];})+'</span></div>'; }).join('');
   }
   document.querySelectorAll('.order-step').forEach(function(s){ s.classList.remove('active'); });
   document.getElementById('os'+(step+1)).classList.add('active');
