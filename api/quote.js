@@ -6,8 +6,6 @@
 //
 // Env vars: RESEND_API_KEY (required)
 //           ORDER_EMAIL (optional, default orders@siecraft.com)
-//           QUOTE_COPY_EMAIL (optional) also receives the shop copy (BCC) so the
-//           command center can import quotes from that Gmail inbox
 //           MAIL_FROM   (optional, default "SieCraft <orders@siecraft.com>";
 //                        the domain must be verified in Resend)
 
@@ -97,7 +95,6 @@ module.exports = async (req, res) => {
 
   const from = process.env.MAIL_FROM || 'SieCraft <orders@siecraft.com>';
   const to = process.env.ORDER_EMAIL || 'orders@siecraft.com';
-  const copy = (process.env.QUOTE_COPY_EMAIL || '').trim();
 
   const ref = quoteRef();
   const ownerText = [
@@ -130,7 +127,6 @@ module.exports = async (req, res) => {
     await sendEmail({
       from,
       to: [to],
-      ...(copy && copy.toLowerCase() !== to.toLowerCase() ? { bcc: [copy] } : {}),
       reply_to: q.email,
       subject: `Quote request ${ref}: ${q.type || 'Custom order'} from ${q.name}${q.deadline !== 'No date given' ? ` (needed by ${q.deadlineNice || q.deadline})` : ''}`,
       text: ownerText,
