@@ -5,7 +5,7 @@
 // with no mail app set up.
 //
 // Env vars: RESEND_API_KEY (required)
-//           ORDER_EMAIL (optional, default SieCraftcnc@gmail.com)
+//           ORDER_EMAIL (optional, default orders@siecraft.com)
 //           QUOTE_COPY_EMAIL (optional) also receives the shop copy (BCC) so the
 //           command center can import quotes from that Gmail inbox
 //           MAIL_FROM   (optional, default "SieCraft <orders@siecraft.com>";
@@ -96,7 +96,7 @@ module.exports = async (req, res) => {
   }
 
   const from = process.env.MAIL_FROM || 'SieCraft <orders@siecraft.com>';
-  const to = process.env.ORDER_EMAIL || 'SieCraftcnc@gmail.com';
+  const to = process.env.ORDER_EMAIL || 'orders@siecraft.com';
   const copy = (process.env.QUOTE_COPY_EMAIL || '').trim();
 
   const ref = quoteRef();

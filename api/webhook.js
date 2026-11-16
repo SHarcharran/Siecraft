@@ -1,6 +1,6 @@
 // api/webhook.js
 // Listens for checkout.session.completed from Stripe, then emails the full
-// order details to SieCraftcnc@gmail.com via Resend.
+// order details to orders@siecraft.com (ORDER_EMAIL) via Resend.
 // Requires STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, RESEND_API_KEY in Vercel.
 
 const Stripe = require('stripe');
@@ -69,7 +69,7 @@ async function handler(req, res) {
         },
         body: JSON.stringify({
           from: process.env.MAIL_FROM || 'SieCraft Orders <orders@siecraft.com>',
-          to: [process.env.ORDER_EMAIL || 'SieCraftcnc@gmail.com'],
+          to: [process.env.ORDER_EMAIL || 'orders@siecraft.com'],
           reply_to: paidEmail || undefined,
           subject: `${m.kind === 'premade' ? 'Order paid' : 'Deposit paid'}: ${m.product || 'Custom order'} ($${amount})`,
           text: [
