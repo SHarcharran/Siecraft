@@ -104,3 +104,9 @@ SieCraftcnc@gmail.com
 ---
 
 *Built with ❤️ and a lot of sawdust in Orlando, FL.*
+
+## Name sign builder (/name-sign) — added Nov 17, 2026
+- `name-sign.html`: live configurator (name, 13 fonts, 12/18/22in, 1/4–3/4in birch, natural + 6 paints). The preview is the exact cut shape.
+- Engine `js/namesign-engine.js` (JSTS + opentype.js in `js/lib/`, runs in `js/namesign-worker.js`): one connected piece, auto-bridges i-dots/near-touching letters, end-mill radius applied, thin parts thickened or refused, fail closed. Per-thickness rules in `STOCK` (adjust after test cuts).
+- Fonts: `fonts/namesign/` (Latin subsets, OFL/Apache licenses alongside).
+- Prices/options: `products.json` → `nameSign` (server-priced in `api/checkout.js`, kind `namesign`). Shop closed → "Order this design" emails a quote (with mockup) via `api/quote.js`. Every order includes a `?maker=1` link that opens the design with DXF download.

@@ -26,8 +26,8 @@ module.exports = async (req, res) => {
   const body = req.body || {};
   const email = clip(body.customerEmail, 200).trim();
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  // Deposits need the email up front; Buy Now lets Stripe collect it.
-  if (body.kind !== 'premade' && !emailOk) {
+  // Deposits need the email up front; Buy Now and name signs let Stripe collect it.
+  if (body.kind !== 'premade' && body.kind !== 'namesign' && !emailOk) {
     res.status(400).json({ error: 'A valid email is required.' });
     return;
   }
@@ -67,6 +67,46 @@ module.exports = async (req, res) => {
       text: { maximum_length: Math.min(Math.max(parseInt(f.max, 10) || 60, 1), 255) }
     }));
     if (fields.length) extra.custom_fields = fields;
+  } else if (body.kind === 'namesign') {
+    // Name cutout sign from /name-sign. Every option is checked against products.json and priced here.
+    const ns = catalog.nameSign || {};
+    if (!ns.visible) { res.status(400).json({ error: 'Name signs are not available right now.' }); return; }
+    const d = body.design || {};
+    const text = String(d.text || '').normalize('NFC').replace(/\s+/g, ' ').trim();
+    const maxChars = ns.maxChars || 16;
+    if (!text || Array.from(text).length > maxChars || !/^[\p{L}\p{M}0-9 &'’.\-]+$/u.test(text)) {
+      res.status(400).json({ error: 'Please check the name on your sign.' }); return;
+    }
+    const si = (ns.sizes || []).findIndex(z => z.width === Number(d.width));
+    const stock = (ns.stock || []).find(z => z.id === d.stock);
+    const fin = (ns.finishes || []).find(z => z.id === d.finish);
+    const font = (ns.fonts || []).find(z => z.id === d.font);
+    if (si < 0 || !stock || !fin || !font) { res.status(400).json({ error: 'Please pick a size, thickness, finish and font.' }); return; }
+    const size = ns.sizes[si];
+    const bar = font.bar ? true : !!d.bar;
+    const price = size.price + (fin.paint ? size.paint : 0) + ((stock.add || [])[si] || 0);
+    kind = 'namesign';
+    productName = `${ns.name || 'Name Cutout Sign'}: "${text}"`;
+    const spec = `${size.width}in wide · ${stock.label} · ${fin.label} · ${font.label} font${bar ? ' · underline bar' : ''}`;
+    lineItem = {
+      price_data: {
+        currency: 'usd',
+        product_data: { name: clip(productName, 250), description: clip(spec, 500) },
+        unit_amount: Math.round(price * 100)
+      },
+      quantity: 1
+    };
+    extra.shipping_address_collection = { allowed_countries: ['US'] };
+    extra.shipping_options = [
+      { shipping_rate_data: { type: 'fixed_amount', display_name: clip((catalog.shipping || {}).pickupLabel || 'Free local pickup (Orlando)', 100),
+          fixed_amount: { amount: 0, currency: 'usd' } } },
+      { shipping_rate_data: { type: 'fixed_amount', display_name: clip(`USPS shipping (${size.width}in sign)`, 100),
+          fixed_amount: { amount: Math.round((size.ship || 12) * 100), currency: 'usd' } } }
+    ];
+    const site0 = process.env.SITE_URL || 'https://siecraft.com';
+    const q = new URLSearchParams({ n: text, f: font.id, w: String(size.width), t: stock.id, c: fin.id, b: bar ? '1' : '0' });
+    extra._namesign = { size: `${size.width}in wide`, material: stock.label, personalization: `"${text}" · ${font.label} (${font.family}) · ${fin.label}${bar ? ' · underline bar' : ''}`,
+      notes: `Cut file: ${site0}/name-sign?${q.toString()}&maker=1` };
   } else {
     const item = (catalog.custom || []).find(p => p.id === body.id);
     if (!item) { res.status(400).json({ error: 'Unknown product.' }); return; }
@@ -94,6 +134,8 @@ module.exports = async (req, res) => {
     const description = clip(`${kind === 'deposit' ? 'Deposit' : 'Order'}: ${productName} - ${who}`, 300);
     const taxRate = process.env.STRIPE_TAX_RATE_ID;
     if (taxRate) lineItem.dynamic_tax_rates = [taxRate];
+    const ns_ = extra._namesign || {};
+    delete extra._namesign;
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       ...(emailOk ? { customer_email: email } : {}),
@@ -111,13 +153,13 @@ module.exports = async (req, res) => {
         product: clip(productName, 200),
         customerName: clip(body.customerName, 200),
         customerPhone: clip(body.customerPhone, 40),
-        material: clip(body.material, 100),
-        size: clip(body.size, 100),
-        personalization: clip(body.personalization, 490),
-        notes: clip(body.notes, 490)
+        material: clip(ns_.material || body.material, 100),
+        size: clip(ns_.size || body.size, 100),
+        personalization: clip(ns_.personalization || body.personalization, 490),
+        notes: clip(ns_.notes || body.notes, 490)
       },
-      success_url: `${site}/?order=success`,
-      cancel_url: `${site}/?order=cancelled#shop`
+      success_url: kind === 'namesign' ? `${site}/name-sign?order=success` : `${site}/?order=success`,
+      cancel_url: kind === 'namesign' ? `${site}/name-sign?order=cancelled` : `${site}/?order=cancelled#shop`
     });
     res.status(200).json({ url: session.url });
   } catch (err) {

@@ -113,5 +113,190 @@
     "flat": 6,
     "label": "USPS shipping (US)",
     "pickupLabel": "Free local pickup (Orlando)"
+  },
+  "nameSign": {
+    "_readme": "Name cutout sign builder (/name-sign). The server prices every order from this block. Starter prices: Steve to confirm before shopOpen. sizes[].price = 1/4in natural; paint and thickness add per size (same order as sizes). ship = USPS charge for that size; pickup is free.",
+    "visible": true,
+    "name": "Custom Name Cutout Sign",
+    "maxChars": 16,
+    "sizes": [
+      {
+        "width": 12,
+        "price": 29,
+        "paint": 15,
+        "ship": 8
+      },
+      {
+        "width": 18,
+        "price": 45,
+        "paint": 20,
+        "ship": 12
+      },
+      {
+        "width": 22,
+        "price": 65,
+        "paint": 25,
+        "ship": 15
+      }
+    ],
+    "stock": [
+      {
+        "id": "1/4",
+        "label": "1/4\" Baltic birch",
+        "note": "Light, hangs on a wall",
+        "add": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "1/2",
+        "label": "1/2\" Baltic birch",
+        "note": "Sturdier, wall or shelf",
+        "add": [
+          8,
+          12,
+          16
+        ]
+      },
+      {
+        "id": "3/4",
+        "label": "3/4\" birch",
+        "note": "Stands up on a shelf",
+        "add": [
+          15,
+          22,
+          30
+        ]
+      }
+    ],
+    "finishes": [
+      {
+        "id": "natural",
+        "label": "Natural birch",
+        "hex": "#e3c393",
+        "paint": false
+      },
+      {
+        "id": "white",
+        "label": "White",
+        "hex": "#f3f0e8",
+        "paint": true
+      },
+      {
+        "id": "black",
+        "label": "Black",
+        "hex": "#1c1c1e",
+        "paint": true
+      },
+      {
+        "id": "sage",
+        "label": "Sage",
+        "hex": "#9aae8a",
+        "paint": true
+      },
+      {
+        "id": "navy",
+        "label": "Navy",
+        "hex": "#203a5c",
+        "paint": true
+      },
+      {
+        "id": "blush",
+        "label": "Blush",
+        "hex": "#e6b3ab",
+        "paint": true
+      },
+      {
+        "id": "gold",
+        "label": "Gold",
+        "hex": "#c7a046",
+        "paint": true
+      }
+    ],
+    "fonts": [
+      {
+        "id": "pacifico",
+        "label": "Retro",
+        "file": "pacifico.ttf",
+        "family": "Pacifico"
+      },
+      {
+        "id": "grandhotel",
+        "label": "Classic",
+        "file": "grandhotel.ttf",
+        "family": "Grand Hotel"
+      },
+      {
+        "id": "norican",
+        "label": "Elegant",
+        "file": "norican.ttf",
+        "family": "Norican"
+      },
+      {
+        "id": "kaushan",
+        "label": "Farmhouse",
+        "file": "kaushan.ttf",
+        "family": "Kaushan Script"
+      },
+      {
+        "id": "yellowtail",
+        "label": "Vintage",
+        "file": "yellowtail.ttf",
+        "family": "Yellowtail"
+      },
+      {
+        "id": "damion",
+        "label": "Casual",
+        "file": "damion.ttf",
+        "family": "Damion"
+      },
+      {
+        "id": "lobster",
+        "label": "Bold",
+        "file": "lobster.ttf",
+        "family": "Lobster"
+      },
+      {
+        "id": "playball",
+        "label": "Script",
+        "file": "playball.ttf",
+        "family": "Playball"
+      },
+      {
+        "id": "dancing",
+        "label": "Dancing",
+        "file": "dancing.ttf",
+        "family": "Dancing Script"
+      },
+      {
+        "id": "oleo",
+        "label": "Chunky",
+        "file": "oleo.ttf",
+        "family": "Oleo Script"
+      },
+      {
+        "id": "bebas",
+        "label": "Modern",
+        "file": "bebas.ttf",
+        "family": "Bebas Neue",
+        "bar": true
+      },
+      {
+        "id": "alfaslab",
+        "label": "Slab",
+        "file": "alfaslab.ttf",
+        "family": "Alfa Slab One",
+        "bar": true
+      },
+      {
+        "id": "titan",
+        "label": "Rounded",
+        "file": "titan.ttf",
+        "family": "Titan One",
+        "bar": true
+      }
+    ]
   }
 }

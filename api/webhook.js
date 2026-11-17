@@ -48,13 +48,14 @@ async function handler(req, res) {
     const fields = (session.custom_fields || []).map(f => `${(f.label && f.label.custom) || f.key}: ${(f.text && f.text.value) || '(blank)'}`);
     const a = ship && ship.address;
     let qtyLine = '';
+    const full = m.kind === 'premade' || m.kind === 'namesign';   // paid in full (not a deposit)
     if (m.kind === 'premade' && process.env.STRIPE_SECRET_KEY) {
       try {
         const li = await Stripe(process.env.STRIPE_SECRET_KEY).checkout.sessions.listLineItems(session.id, { limit: 10 });
         qtyLine = li.data.map(x => `${x.quantity} x ${x.description}`).join('; ');
       } catch (e) { console.error('line items lookup failed:', e && e.message); }
     }
-    const shipLines = m.kind === 'premade' ? [
+    const shipLines = full ? [
       '',
       shipCents > 0 ? `Delivery: SHIP ($${(shipCents / 100).toFixed(2)} paid)` : 'Delivery: LOCAL PICKUP',
       ...(shipCents > 0 && a ? [`Ship to: ${ship.name || ''}`, `${a.line1 || ''}${a.line2 ? ', ' + a.line2 : ''}`, `${a.city || ''}, ${a.state || ''} ${a.postal_code || ''}`] : [])
@@ -71,7 +72,7 @@ async function handler(req, res) {
           from: process.env.MAIL_FROM || 'SieCraft Orders <orders@siecraft.com>',
           to: [process.env.ORDER_EMAIL || 'orders@siecraft.com'],
           reply_to: paidEmail || undefined,
-          subject: `${m.kind === 'premade' ? 'Order paid' : 'Deposit paid'}: ${m.product || 'Custom order'} ($${amount})`,
+          subject: `${full ? 'Order paid' : 'Deposit paid'}: ${m.product || 'Custom order'} ($${amount})`,
           text: [
             'New SieCraft payment received.',
             '',
@@ -85,7 +86,7 @@ async function handler(req, res) {
               : ['', `Material: ${m.material || ''}`, `Size: ${m.size || ''}`, '', `Personalization: ${m.personalization || ''}`, `Notes: ${m.notes || ''}`]),
             ...shipLines,
             '',
-            `Amount paid${m.kind === 'premade' ? '' : ' (50% deposit on starting price)'}: $${amount}${taxCents ? ` (includes $${(taxCents / 100).toFixed(2)} sales tax)` : ''}`,
+            `Amount paid${full ? '' : ' (50% deposit on starting price)'}: $${amount}${taxCents ? ` (includes $${(taxCents / 100).toFixed(2)} sales tax)` : ''}`,
             `Stripe session: ${session.id}`
           ].join('\n')
         })
