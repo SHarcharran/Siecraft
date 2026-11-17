@@ -667,7 +667,7 @@ body {
     <div class="panel-title-row" style="text-align:center;">
       <div class="panel-tag">Start Your Order</div>
       <h2 class="panel-h2">GET A <em>FREE QUOTE</em></h2>
-      <p class="panel-sub">Fill out the form below. We'll reply with a free design proof and an exact price.</p>
+      <p class="panel-sub">Fill out the form below. We'll reply with an exact price, then send your free design proof once you approve.</p>
     </div>
     <div class="order-progress" id="order-progress">
       <div class="op-step"><div class="op-dot active" id="od1">1</div><div class="op-label">You</div></div>
@@ -744,6 +744,18 @@ body {
         <div class="form-group full"><label class="form-label">Text / Personalization *</label>
           <textarea class="form-textarea" id="o-text" placeholder="Exactly what you want engraved. Names, dates, addresses, quotes..."></textarea>
         </div>
+        <div class="form-group full"><label class="form-label">Pickup or ship?</label>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--text,#ddd);">
+            <label style="display:flex;gap:6px;align-items:center;cursor:pointer;"><input type="radio" name="o-delivery" value="pickup" checked> Free pickup in Orlando</label>
+            <label style="display:flex;gap:6px;align-items:center;cursor:pointer;"><input type="radio" name="o-delivery" value="ship"> Ship to me (US)</label>
+          </div>
+          <div id="o-zip-wrap" style="display:none;margin-top:10px;">
+            <label class="form-label" for="o-zip">Shipping ZIP code *</label>
+            <input class="form-input" id="o-zip" inputmode="numeric" autocomplete="postal-code" maxlength="10" placeholder="e.g. 32801" style="max-width:180px;">
+            <div style="font-size:12px;color:var(--dim);margin-top:4px;">We'll include shipping in your quote. Full address comes later, after you approve.</div>
+          </div>
+          <script>(function(){var w=document.getElementById('o-zip-wrap');document.querySelectorAll('input[name="o-delivery"]').forEach(function(r){r.addEventListener('change',function(){w.style.display=document.querySelector('input[name="o-delivery"]:checked').value==='ship'?'block':'none';});});})();</script>
+        </div>
         <div class="form-group full">
           <label class="form-label" for="o-deadline">Need it by a date? (optional)</label>
           <input class="form-input" id="o-deadline" type="date" style="color-scheme:dark">
@@ -768,7 +780,7 @@ body {
       <div class="step-title">Review & Submit</div>
       <div id="order-review" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;"></div>
       <div style="background:linear-gradient(135deg,#0a1a0a,#0e0e12);border:1px solid rgba(45,138,94,.2);border-radius:10px;padding:14px;font-size:13px;color:#6a9a6a;line-height:1.7;margin-bottom:16px;">
-        ✅ <strong style="color:#8aba8a;">Free design proof before we cut.</strong> We'll send a digital mockup before cutting anything. No charge until you approve.
+        ✅ <strong style="color:#8aba8a;">Free design proof before we cut.</strong> After you approve the price and place your deposit, we'll send a digital mockup before cutting anything. Your deposit is fully refundable until you approve the proof.
       </div>
       <div class="step-nav">
         <button class="btn btn-ghost" onclick="orderBack(4)">← Back</button>
@@ -780,7 +792,7 @@ body {
     <div class="order-step" id="os-success" style="text-align:center;padding:32px 0;">
       <div style="font-size:56px;margin-bottom:16px;">🎉</div>
       <div style="font-family:var(--bebas);font-size:28px;letter-spacing:.06em;color:#fff;margin-bottom:10px;">ORDER SENT!</div>
-      <div style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:24px;">We got your request and emailed you a confirmation. We'll reply soon with a free design proof. Check your email and texts!<br><br>Questions? Call or text us anytime.</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:24px;">We got your request and emailed you a confirmation. We'll reply soon with your exact price. Check your email and texts!<br><br>Questions? Call or text us anytime.</div>
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
         <a href="tel:+19293710501" class="btn btn-primary">📱 (929) 371-0501</a>
         <button class="btn btn-outline" onclick="resetOrder()">Place Another Order</button>
@@ -1375,6 +1387,9 @@ function orderNext(step) {
   }
   if (step===3) {
     if (!document.getElementById('o-text').value.trim()) { document.getElementById('o-text').focus(); return; }
+    var dlv = (document.querySelector('input[name="o-delivery"]:checked')||{}).value || 'pickup';
+    var zip = (document.getElementById('o-zip').value||'').replace(/\D/g,'').slice(0,5);
+    if (dlv==='ship' && zip.length!==5) { alert('Please enter a 5-digit ZIP code for shipping.'); document.getElementById('o-zip').focus(); return; }
     // Build review
     var rev = document.getElementById('order-review');
     rev.innerHTML = [
@@ -1387,6 +1402,7 @@ function orderNext(step) {
       ['Qty', document.getElementById('o-qty').value],
       ['Finish', document.getElementById('o-finish').value],
       ['Needed by', (function(v){if(!v)return 'No date given';var d=new Date(v+'T12:00:00');return isNaN(d)?v:d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});})(document.getElementById('o-deadline').value)],
+      ['Delivery', dlv==='ship' ? 'Ship to '+zip : 'Free pickup in Orlando'],
       ['Personalization', document.getElementById('o-text').value],
     ].map(function(r){ return '<div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span style="color:var(--dim);width:110px;flex-shrink:0;font-size:11px;text-transform:uppercase;letter-spacing:.08em;">'+r[0]+'</span><span style="color:#ccc;font-weight:600;word-break:break-word;">'+String(r[1]).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];})+'</span></div>'; }).join('');
   }
@@ -1462,6 +1478,8 @@ function submitOrder() {
         qty: document.getElementById('o-qty').value,
         finish: document.getElementById('o-finish').value,
         deadline: document.getElementById('o-deadline').value,
+        delivery: (document.querySelector('input[name="o-delivery"]:checked')||{}).value || 'pickup',
+        zip: (document.getElementById('o-zip').value||'').replace(/\D/g,'').slice(0,5),
         text: document.getElementById('o-text').value,
         notes: document.getElementById('o-notes').value + (skipped ? '\n[' + skipped + ' photo(s) could not be read by the browser]' : ''),
         website: document.getElementById('o-website').value,

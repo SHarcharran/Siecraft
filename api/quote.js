@@ -16,6 +16,15 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
 const clip = (v, n) => String(v == null ? '' : v).trim().slice(0, n);
 
 // "2026-12-10" -> "Thu, Dec 10, 2026"; anything else is returned as typed.
+// First 3 digits of a US ZIP -> state (USPS prefix ranges). Used to label the quote and spot out-of-state shipping.
+const ZIP3 = [[5,5,'NY'],[6,9,'PR'],[10,27,'MA'],[28,29,'RI'],[30,38,'NH'],[39,49,'ME'],[50,59,'VT'],[60,69,'CT'],[70,89,'NJ'],[100,149,'NY'],[150,196,'PA'],[197,199,'DE'],[200,200,'DC'],[201,201,'VA'],[202,205,'DC'],[206,219,'MD'],[220,246,'VA'],[247,268,'WV'],[270,289,'NC'],[290,299,'SC'],[300,319,'GA'],[320,339,'FL'],[341,349,'FL'],[350,369,'AL'],[370,385,'TN'],[386,397,'MS'],[398,399,'GA'],[400,427,'KY'],[430,459,'OH'],[460,479,'IN'],[480,499,'MI'],[500,528,'IA'],[530,549,'WI'],[550,567,'MN'],[569,569,'DC'],[570,577,'SD'],[580,588,'ND'],[590,599,'MT'],[600,629,'IL'],[630,658,'MO'],[660,679,'KS'],[680,693,'NE'],[700,714,'LA'],[716,729,'AR'],[730,749,'OK'],[750,799,'TX'],[800,816,'CO'],[820,831,'WY'],[832,838,'ID'],[840,847,'UT'],[850,865,'AZ'],[870,884,'NM'],[885,885,'TX'],[889,898,'NV'],[900,961,'CA'],[967,968,'HI'],[969,969,'GU'],[970,979,'OR'],[980,994,'WA'],[995,999,'AK']];
+function zipState(zip) {
+  const n = parseInt(String(zip).slice(0, 3), 10);
+  if (!/^\d{5}$/.test(String(zip))) return '';
+  const hit = ZIP3.find(([a, b]) => n >= a && n <= b);
+  return hit ? hit[2] : '';
+}
+
 function niceDate(v) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(v || '')) return v || '';
   const d = new Date(v + 'T12:00:00Z');
@@ -70,6 +79,8 @@ module.exports = async (req, res) => {
     finish: clip(b.finish, 100),
     deadline: clip(b.deadline, 60) || 'No date given',
     deadlineNice: niceDate(clip(b.deadline, 60)),
+    delivery: b.delivery === 'ship' ? 'ship' : 'pickup',
+    zip: String(b.zip || '').replace(/\D/g, '').slice(0, 5),
     text: clip(b.text, 3000),
     notes: clip(b.notes, 3000)
   };
@@ -78,6 +89,15 @@ module.exports = async (req, res) => {
     res.status(400).json({ error: 'Please fill in your name, email, phone, and what you want engraved.' });
     return;
   }
+
+  if (q.delivery === 'ship' && q.zip.length !== 5) {
+    res.status(400).json({ error: 'Please enter a 5-digit ZIP code for shipping.' });
+    return;
+  }
+  q.state = q.delivery === 'ship' ? zipState(q.zip) : '';
+  q.deliveryLine = q.delivery === 'ship'
+    ? `Ship to ${q.zip}${q.state ? ` (${q.state})` : ''}${q.state && q.state !== 'FL' ? ' · OUT OF STATE' : ''}`
+    : 'Pickup (free, Orlando)';
 
   const photos = Array.isArray(b.photos) ? b.photos.slice(0, MAX_PHOTOS) : [];
   let total = 0;
@@ -111,6 +131,7 @@ module.exports = async (req, res) => {
     `Quantity: ${q.qty}`,
     `Finish: ${q.finish}`,
     `Needed by: ${q.deadline}${q.deadlineNice && q.deadlineNice !== q.deadline ? ` (${q.deadlineNice})` : ''}`,
+    `Delivery: ${q.deliveryLine}`,
     '',
     'PERSONALIZATION:',
     q.text,
@@ -149,11 +170,11 @@ module.exports = async (req, res) => {
       text: [
         `Hi ${clip(b.fname, 40).replace(/[^\p{L}\p{M}' .-]/gu, '') || 'there'},`,
         '',
-        `Thanks for reaching out about a ${q.type || 'custom piece'}. Your request reached us, and we'll reply with your free design proof and an exact price.`,
+        `Thanks for reaching out about a ${q.type || 'custom piece'}. Your request reached us, and we'll reply with an exact price${q.delivery === 'ship' ? ` including shipping to ${q.zip}` : ' (free pickup in Orlando)'}. Once you approve and place your deposit, we'll send your free design proof.`,
         '',
         `Your quote number is ${ref}. Mention it if you call or text.`,
         '',
-        'Need it sooner, or want to add something? Just reply to this email or text (929) 371-0501.',
+        'Questions, or want to add something? Just reply to this email or text (929) 371-0501.',
         '',
         'SieCraft',
         'Made in Orlando, FL · siecraft.com'
