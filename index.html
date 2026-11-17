@@ -621,12 +621,12 @@ body {
     <div class="panel-title-row">
       <div class="panel-tag">Shop SieCraft</div>
       <h2 class="panel-h2">BUY <em>DIRECT</em></h2>
-      <p class="panel-sub">Personalized gifts you can buy now, plus custom orders — all secured by Stripe.</p>
+      <p class="panel-sub">Personalized gifts you can buy now, plus custom orders priced with a free quote.</p>
     </div>
     <div class="stripe-trust">
       <div class="st-item"><span>🔒</span> Stripe Secured</div>
       <div class="st-item"><span>💳</span> All cards · Apple Pay · Google Pay</div>
-      <div class="st-item"><span>🔄</span> Custom: 50% deposit</div>
+      <div class="st-item"><span>✏️</span> Custom: free quote, then 50% deposit</div>
       <div class="st-item"><span>📍</span> Free local pickup · Ships anywhere</div>
     </div>
     <div class="shop-tabs-row">
@@ -638,23 +638,23 @@ body {
         <div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--dim);">
           <div style="font-size:40px;margin-bottom:12px;opacity:.3;">🛍️</div>
           <div style="font-family:var(--bebas);font-size:20px;letter-spacing:.06em;color:#9a9a9a;margin-bottom:6px;">Every piece is made to order</div>
-          <div style="font-size:13px;">Pick a product under Custom Orders and we'll make it for you.</div>
+          <div style="font-size:13px;">Pick a product under Custom Orders and request a free quote.</div>
         </div>
       </div>
     </div>
     <div id="shop-custom-wrap" style="display:none;">
       <div class="custom-grid">
-        <div class="custom-card" onclick="openCustomOrderApp('wood-signs','Wood Signs & Plaques','🪵',45,'Custom CNC wood signs in cedar, walnut, or pine.')">
-          <div class="custom-visual">🪵</div><div class="custom-body"><div class="custom-name">Wood Signs & Plaques</div><div class="custom-desc">CNC-routed from real cedar, walnut, or pine. Address plaques, family signs, business signs, memorial pieces.</div><div class="custom-footer"><div class="custom-price">from $45 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
+        <div class="custom-card" onclick="startQuote('Custom Wood Sign')">
+          <div class="custom-visual">🪵</div><div class="custom-body"><div class="custom-name">Wood Signs & Plaques</div><div class="custom-desc">CNC-routed from real cedar, walnut, or pine. Address plaques, family signs, business signs, memorial pieces.</div><div class="custom-footer"><div class="custom-price">from $45</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
-        <div class="custom-card" onclick="openCustomOrderApp('memorial','Memorial Signs','🕊️',65,'Memorial plaques, including pet memorials, made with care from real wood.')">
-          <div class="custom-visual" style="background:linear-gradient(135deg,#0a0a0a,#0e0e0e)">🕊️</div><div class="custom-body"><div class="custom-name">Memorial Signs</div><div class="custom-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="custom-footer"><div class="custom-price">from $65 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
+        <div class="custom-card" onclick="startQuote('Memorial Sign / Plaque')">
+          <div class="custom-visual" style="background:linear-gradient(135deg,#0a0a0a,#0e0e0e)">🕊️</div><div class="custom-body"><div class="custom-name">Memorial Signs</div><div class="custom-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="custom-footer"><div class="custom-price">from $65</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
-        <div class="custom-card" onclick="openCustomOrderApp('business','Business Signs','🏢',65,'Professional office and storefront signs in real wood.')">
-          <div class="custom-visual" style="background:linear-gradient(135deg,#0a0a1a,#0e0e0e)">🏢</div><div class="custom-body"><div class="custom-name">Business Signs</div><div class="custom-desc">Door signs, reception plaques, award plaques, and lobby signage.</div><div class="custom-footer"><div class="custom-price">from $65 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
+        <div class="custom-card" onclick="startQuote('Business Sign')">
+          <div class="custom-visual" style="background:linear-gradient(135deg,#0a0a1a,#0e0e0e)">🏢</div><div class="custom-body"><div class="custom-name">Business Signs</div><div class="custom-desc">Door signs, reception plaques, award plaques, and lobby signage.</div><div class="custom-footer"><div class="custom-price">from $65</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
-        <div class="custom-card" onclick="openCustomOrderApp('gifts','Gifts & Laser Items','🎁',8,'Keychains, cutting boards, coasters, ornaments.')">
-          <div class="custom-visual" style="background:linear-gradient(135deg,#0a1a00,#0e0e0e)">🎁</div><div class="custom-body"><div class="custom-name">Gifts & Laser Items</div><div class="custom-desc">Cutting boards, coaster sets, keychains, and ornaments.</div><div class="custom-footer"><div class="custom-price">from $8 · 50% deposit</div><div class="custom-note">Proof before cutting</div></div></div>
+        <div class="custom-card" onclick="startQuote('')">
+          <div class="custom-visual" style="background:linear-gradient(135deg,#0a1a00,#0e0e0e)">🎁</div><div class="custom-body"><div class="custom-name">Gifts & Laser Items</div><div class="custom-desc">Cutting boards, coaster sets, keychains, and ornaments.</div><div class="custom-footer"><div class="custom-price">from $8</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
       </div>
     </div>
@@ -1210,6 +1210,15 @@ function switchShopTab(tab, btn) {
 }
 
 var coaData = {};
+// Custom work goes through the quote form (price first, then deposit, then proof).
+function startQuote(product) {
+  if (typeof resetOrder === 'function' && orderStep !== 1) resetOrder();
+  var t = document.getElementById('o-type');
+  if (t && product) { t.value = product; t.dispatchEvent(new Event('change')); }
+  showTab('order');
+  window.scrollTo(0,0);
+  var f = document.getElementById('o-fname'); if (f) setTimeout(function(){ try{ f.focus({preventScroll:true}); }catch(e){} }, 150);
+}
 function openCustomOrderApp(id, name, emoji, price, subtitle) {
   coaData = {id:id, name:name, emoji:emoji, price:price, subtitle:subtitle};
   document.getElementById('coa-emoji').textContent = emoji;
