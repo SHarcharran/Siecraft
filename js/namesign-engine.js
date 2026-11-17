@@ -5,11 +5,11 @@
 (function (root) {
 "use strict";
 
-// Per-thickness rules. Adjust after real test cuts.
+// Per-thickness rules. Adjust after real test cuts. Nov 17: thinnest part raised (0.18/0.20/0.30 -> 0.22/0.24/0.34), bridges 25% wider than that.
 const STOCK = {
-  "1/4": { label: '1/4" Baltic birch', toolDia: 0.125, minWidth: 0.18 },
-  "1/2": { label: '1/2" Baltic birch', toolDia: 0.125, minWidth: 0.20 },
-  "3/4": { label: '3/4" birch',        toolDia: 0.25,  minWidth: 0.30 },
+  "1/4": { label: '1/4" Baltic birch', toolDia: 0.125, minWidth: 0.22 },
+  "1/2": { label: '1/2" Baltic birch', toolDia: 0.125, minWidth: 0.24 },
+  "3/4": { label: '3/4" birch',        toolDia: 0.25,  minWidth: 0.34 },
 };
 const RULES = {
   flatten_tol: 0.002,     // curve chord error (in)
@@ -110,7 +110,7 @@ function bridgeAll(g, width, capIn, notes) {
         : "Some letters or words don't touch, so the sign would fall apart. Turn on the underline bar, or pick a connected script font.");
     }
     const pts = DOp.nearestPoints(body, best.p);
-    const br = GF.createLineString([pts[0], pts[1]]).buffer(width / 2 * 1.15, 8);
+    const br = GF.createLineString([pts[0], pts[1]]).buffer(width / 2 * 1.25, 8);
     body = polysOf(union([body, best.p, br])).sort((a, b) => b.getArea() - a.getArea())[0];
     loose = loose.filter(q => q !== best.p);
     bridged++;
