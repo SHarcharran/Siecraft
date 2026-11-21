@@ -1,7 +1,7 @@
 /* Site-wide "under construction" note. Small floating card; the visitor can close it (remembered for 7 days).
    To remove it everywhere: set ON = false (or delete this file and its <script> tags). */
 (function () {
-  var ON = true;
+  var ON = false;
   var TEXT = "We're still building siecraft.com, so a few things may change. Orders and quotes work. Questions? Text (929) 371-0501.";
   if (!ON) return;
   try { var t = +localStorage.getItem("sc_notice_closed") || 0; if (Date.now() - t < 7 * 864e5) return; } catch (e) {}
