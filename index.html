@@ -226,6 +226,13 @@ body {
 .prod-photo { display:block;margin:-22px -22px 16px;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#1a1208,#0e0e0e); }
 .prod-photo img { width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s; }
 .prod-card:hover .prod-photo img { transform:scale(1.04); }
+[data-slides]{position:relative}
+[data-slides] img.sl{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+[data-slides] img.sl.on{opacity:1}
+.sl-dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:5px;pointer-events:none;z-index:2}
+.sl-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);box-shadow:0 0 2px rgba(0,0,0,.6)}
+.sl-dots i.on{background:#fff}
+@media (prefers-reduced-motion:reduce){[data-slides] img.sl{transition:none}}
 .prod-photo-emoji { display:flex;align-items:center;justify-content:center;font-size:48px; }
 @media (prefers-reduced-motion:reduce){ .prod-photo img{transition:none} }
 .prod-name { font-family: var(--bebas); font-size: 20px; letter-spacing: .04em; color: #fff; margin-bottom: 6px; }
@@ -602,12 +609,12 @@ body {
       <p class="panel-sub">Every product is made to order. No mass production. No two pieces exactly alike.</p>
     </div>
     <div class="product-grid">
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/francis-family-sign.jpg" alt="Carved family sign" loading="lazy" style="object-position:50% 55%"></span><div class="prod-name">Wood Signs & Plaques</div><div class="prod-desc">Business signs, home décor, address plaques, memorial tributes in cedar, walnut, or pine.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/roxy-pet-memorial.jpg" alt="Pet memorial plaque" loading="lazy" style="object-position:50% 35%"></span><div class="prod-name">Memorial Signs</div><div class="prod-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/elephant-3d-relief.jpg" alt="3D carved elephant relief" loading="lazy" style="object-position:50% 40%"></span><div class="prod-name">Home & Wall Décor</div><div class="prod-desc">Family name signs, established signs, address plaques, quote pieces.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/sherrys-trini-flavors-sign.jpg" alt="Restaurant sign" loading="lazy" style="object-position:50% 50%"></span><div class="prod-name">Business Signs</div><div class="prod-desc">Door signs, reception signs, award plaques, and lobby signage.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo" data-slides="home"><img src="/img/gallery/francis-family-sign.jpg" alt="Carved family sign" loading="lazy" style="object-position:50% 55%"></span><div class="prod-name">Wood Signs & Plaques</div><div class="prod-desc">Business signs, home décor, address plaques, memorial tributes in cedar, walnut, or pine.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo" data-slides="memorial"><img src="/img/gallery/roxy-pet-memorial.jpg" alt="Pet memorial plaque" loading="lazy" style="object-position:50% 35%"></span><div class="prod-name">Memorial Signs</div><div class="prod-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo" data-slides="carved"><img src="/img/gallery/elephant-3d-relief.jpg" alt="3D carved elephant relief" loading="lazy" style="object-position:50% 40%"></span><div class="prod-name">Home & Wall Décor</div><div class="prod-desc">Family name signs, established signs, address plaques, quote pieces.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo" data-slides="business"><img src="/img/gallery/sherrys-trini-flavors-sign.jpg" alt="Restaurant sign" loading="lazy" style="object-position:50% 50%"></span><div class="prod-name">Business Signs</div><div class="prod-desc">Door signs, reception signs, award plaques, and lobby signage.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
       <div class="prod-card" onclick="showTab('order')"><span class="prod-photo prod-photo-emoji">🍺</span><div class="prod-name">Bar &amp; Groomsmen Gifts</div><div class="prod-desc">Carved cap-catcher bottle openers and valet trays.</div><div class="prod-price">Get a quote</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/slate-coasters.jpg" alt="Engraved slate coasters" loading="lazy" style="object-position:50% 50%"></span><div class="prod-name">Gifts & Keychains</div><div class="prod-desc">Coaster sets, keychains, and ornaments.</div><div class="prod-price">from $8</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo" data-slides="gifts"><img src="/img/gallery/slate-coasters.jpg" alt="Engraved slate coasters" loading="lazy" style="object-position:50% 50%"></span><div class="prod-name">Gifts & Keychains</div><div class="prod-desc">Coaster sets, keychains, and ornaments.</div><div class="prod-price">from $8</div><div class="prod-arrow">↗</div></div>
     </div>
     <div style="margin-top:32px;">
       <div class="panel-title-row">
@@ -661,16 +668,16 @@ body {
     <div id="shop-custom-wrap" style="display:none;">
       <div class="custom-grid">
         <div class="custom-card" onclick="startQuote('Custom Wood Sign')">
-          <div class="custom-visual has-photo"><img src="/img/gallery/francis-family-sign.jpg" alt="Carved family welcome sign" loading="lazy" style="object-position:50% 55%"></div><div class="custom-body"><div class="custom-name">Wood Signs & Plaques</div><div class="custom-desc">CNC-routed from real cedar, walnut, or pine. Address plaques, family signs, business signs, memorial pieces.</div><div class="custom-footer"><div class="custom-price">from $45</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
+          <div class="custom-visual has-photo" data-slides="home"><img src="/img/gallery/francis-family-sign.jpg" alt="Carved family welcome sign" loading="lazy" style="object-position:50% 55%"></div><div class="custom-body"><div class="custom-name">Wood Signs & Plaques</div><div class="custom-desc">CNC-routed from real cedar, walnut, or pine. Address plaques, family signs, business signs, memorial pieces.</div><div class="custom-footer"><div class="custom-price">from $45</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
         <div class="custom-card" onclick="startQuote('Memorial Sign / Plaque')">
-          <div class="custom-visual has-photo" style="background:linear-gradient(135deg,#0a0a0a,#0e0e0e)"><img src="/img/gallery/roxy-pet-memorial-2.jpg" alt="Pet memorial plaque" loading="lazy" style="object-position:50% 30%"></div><div class="custom-body"><div class="custom-name">Memorial Signs</div><div class="custom-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="custom-footer"><div class="custom-price">from $65</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
+          <div class="custom-visual has-photo" data-slides="memorial" style="background:linear-gradient(135deg,#0a0a0a,#0e0e0e)"><img src="/img/gallery/roxy-pet-memorial-2.jpg" alt="Pet memorial plaque" loading="lazy" style="object-position:50% 30%"></div><div class="custom-body"><div class="custom-name">Memorial Signs</div><div class="custom-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="custom-footer"><div class="custom-price">from $65</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
         <div class="custom-card" onclick="startQuote('Business Sign')">
-          <div class="custom-visual has-photo" style="background:linear-gradient(135deg,#0a0a1a,#0e0e0e)"><img src="/img/gallery/kumar-kutz-barbershop.jpg" alt="Barbershop business sign" loading="lazy" style="object-position:50% 50%"></div><div class="custom-body"><div class="custom-name">Business Signs</div><div class="custom-desc">Door signs, reception plaques, award plaques, and lobby signage.</div><div class="custom-footer"><div class="custom-price">from $65</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
+          <div class="custom-visual has-photo" data-slides="business" style="background:linear-gradient(135deg,#0a0a1a,#0e0e0e)"><img src="/img/gallery/kumar-kutz-barbershop.jpg" alt="Barbershop business sign" loading="lazy" style="object-position:50% 50%"></div><div class="custom-body"><div class="custom-name">Business Signs</div><div class="custom-desc">Door signs, reception plaques, award plaques, and lobby signage.</div><div class="custom-footer"><div class="custom-price">from $65</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
         <div class="custom-card" onclick="startQuote('')">
-          <div class="custom-visual has-photo" style="background:linear-gradient(135deg,#0a1a00,#0e0e0e)"><img src="/img/gallery/heart-key-keychains.jpg" alt="Engraved keychains" loading="lazy" style="object-position:50% 50%"></div><div class="custom-body"><div class="custom-name">Gifts & Laser Items</div><div class="custom-desc">Coaster sets, keychains, and ornaments.</div><div class="custom-footer"><div class="custom-price">from $8</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
+          <div class="custom-visual has-photo" data-slides="gifts" style="background:linear-gradient(135deg,#0a1a00,#0e0e0e)"><img src="/img/gallery/heart-key-keychains.jpg" alt="Engraved keychains" loading="lazy" style="object-position:50% 50%"></div><div class="custom-body"><div class="custom-name">Gifts & Laser Items</div><div class="custom-desc">Coaster sets, keychains, and ornaments.</div><div class="custom-footer"><div class="custom-price">from $8</div><div class="custom-note" style="color:var(--red);font-weight:700;">Get a free quote →</div></div></div>
         </div>
       </div>
     </div>
@@ -1575,6 +1582,37 @@ renderFaqApp();
     setTimeout(function(){ bar.remove(); }, 9000);
   }
   window.addEventListener('hashchange', function(){ var t=location.hash.replace('#',''); if (document.getElementById('panel-'+t)) showTab(t); });
+})();
+</script>
+<script>
+// Category slideshows: banners with data-slides rotate through gallery photos of that category.
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fetch('/img/gallery/gallery.json',{cache:'no-cache'}).then(function(r){return r.json();}).then(function(list){
+    if(!Array.isArray(list)) return;
+    var boxes = document.querySelectorAll('[data-slides]'), k = 0;
+    [].forEach.call(boxes, function(box){
+      var cat = box.getAttribute('data-slides'), first = box.querySelector('img');
+      if(!first) return;
+      var cur = first.getAttribute('src');
+      var srcs = list.filter(function(p){return p.cat===cat && p.src!==cur;}).map(function(p){return p.src;});
+      if(!srcs.length) return;
+      first.classList.add('sl','on');
+      var imgs=[first], pos=first.style.objectPosition, built=false;
+      var dots=document.createElement('span'); dots.className='sl-dots';
+      dots.innerHTML=new Array(srcs.length+2).join('<i></i>'); box.appendChild(dots);
+      dots.firstChild.classList.add('on');
+      function build(){ if(built) return; built=true;
+        srcs.forEach(function(src){ var im=document.createElement('img'); im.className='sl'; im.src=src; im.alt=first.alt; im.loading='lazy'; im.decoding='async'; box.insertBefore(im,dots); imgs.push(im); }); }
+      var i=0, visible=false, delay=4200 + (k++%3)*700;
+      function step(){ if(!visible || reduce || document.hidden) return; build();
+        var next=(i+1)%imgs.length; if(!imgs[next].complete) return;
+        imgs[i].classList.remove('on'); dots.children[i].classList.remove('on');
+        i=next; imgs[i].classList.add('on'); dots.children[i].classList.add('on'); }
+      if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){ es.forEach(function(e){ visible=e.isIntersecting; if(visible) build(); }); }); io.observe(box); } else { visible=true; }
+      setInterval(step, delay);
+    });
+  }).catch(function(){});
 })();
 </script>
 <script src="/js/site-notice.js" defer></script>
