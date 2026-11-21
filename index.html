@@ -223,6 +223,11 @@ body {
 .prod-card:hover { border-color: #2a2a3a; transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.5); }
 .prod-card:hover::before { opacity:1; }
 .prod-emoji { font-size: 40px; margin-bottom: 14px; display: block; }
+.prod-photo { display:block;margin:-22px -22px 16px;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#1a1208,#0e0e0e); }
+.prod-photo img { width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s; }
+.prod-card:hover .prod-photo img { transform:scale(1.04); }
+.prod-photo-emoji { display:flex;align-items:center;justify-content:center;font-size:48px; }
+@media (prefers-reduced-motion:reduce){ .prod-photo img{transition:none} }
 .prod-name { font-family: var(--bebas); font-size: 20px; letter-spacing: .04em; color: #fff; margin-bottom: 6px; }
 .prod-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
 .prod-price { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--red); }
@@ -597,12 +602,12 @@ body {
       <p class="panel-sub">Every product is made to order. No mass production. No two pieces exactly alike.</p>
     </div>
     <div class="product-grid">
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🪵</span><div class="prod-name">Wood Signs & Plaques</div><div class="prod-desc">Business signs, home décor, address plaques, memorial tributes in cedar, walnut, or pine.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🕊️</span><div class="prod-name">Memorial Signs</div><div class="prod-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🏡</span><div class="prod-name">Home & Wall Décor</div><div class="prod-desc">Family name signs, established signs, address plaques, quote pieces.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🏢</span><div class="prod-name">Business Signs</div><div class="prod-desc">Door signs, reception signs, award plaques, and lobby signage.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🍺</span><div class="prod-name">Bar &amp; Groomsmen Gifts</div><div class="prod-desc">Carved cap-catcher bottle openers and valet trays.</div><div class="prod-price">Get a quote</div><div class="prod-arrow">↗</div></div>
-      <div class="prod-card" onclick="showTab('order')"><span class="prod-emoji">🎁</span><div class="prod-name">Gifts & Keychains</div><div class="prod-desc">Coaster sets, keychains, and ornaments.</div><div class="prod-price">from $8</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/francis-family-sign.jpg" alt="Carved family sign" loading="lazy" style="object-position:50% 55%"></span><div class="prod-name">Wood Signs & Plaques</div><div class="prod-desc">Business signs, home décor, address plaques, memorial tributes in cedar, walnut, or pine.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/roxy-pet-memorial.jpg" alt="Pet memorial plaque" loading="lazy" style="object-position:50% 35%"></span><div class="prod-name">Memorial Signs</div><div class="prod-desc">Indoor plaques, outdoor garden signs, and CNC V-carved photo plaques.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/elephant-3d-relief.jpg" alt="3D carved elephant relief" loading="lazy" style="object-position:50% 40%"></span><div class="prod-name">Home & Wall Décor</div><div class="prod-desc">Family name signs, established signs, address plaques, quote pieces.</div><div class="prod-price">from $45</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/sherrys-trini-flavors-sign.jpg" alt="Restaurant sign" loading="lazy" style="object-position:50% 50%"></span><div class="prod-name">Business Signs</div><div class="prod-desc">Door signs, reception signs, award plaques, and lobby signage.</div><div class="prod-price">from $65</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo prod-photo-emoji">🍺</span><div class="prod-name">Bar &amp; Groomsmen Gifts</div><div class="prod-desc">Carved cap-catcher bottle openers and valet trays.</div><div class="prod-price">Get a quote</div><div class="prod-arrow">↗</div></div>
+      <div class="prod-card" onclick="showTab('order')"><span class="prod-photo"><img src="/img/gallery/slate-coasters.jpg" alt="Engraved slate coasters" loading="lazy" style="object-position:50% 50%"></span><div class="prod-name">Gifts & Keychains</div><div class="prod-desc">Coaster sets, keychains, and ornaments.</div><div class="prod-price">from $8</div><div class="prod-arrow">↗</div></div>
     </div>
     <div style="margin-top:32px;">
       <div class="panel-title-row">
