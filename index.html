@@ -841,9 +841,10 @@ body {
     <div class="panel-title-row">
       <div class="panel-tag">Our Work</div>
       <h2 class="panel-h2">PRODUCT <em>GALLERY</em></h2>
-      <p class="panel-sub">Every order is made to order and unique.</p>
+      <p class="panel-sub">Real pieces, CNC-cut in Orlando. Every order is made to order. Tap a photo to see it larger.</p>
     </div>
-    <div id="gallery-app-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;"></div>
+    <div id="gallery-filters" class="pricing-filters" style="display:none;margin-bottom:16px;"></div>
+        <div id="gallery-app-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;"></div>
     <div id="gallery-empty" style="text-align:center;padding:60px 20px;">
       <div style="font-size:48px;opacity:.3;margin-bottom:12px;">📸</div>
       <div style="font-family:var(--bebas);font-size:22px;color:#9a9a9a;letter-spacing:.06em;margin-bottom:6px;">Photos of recent work coming soon</div>
@@ -1309,8 +1310,18 @@ function loadGalleryApp() {
     }
     if (tab) tab.style.display = '';
     grid.style.display = 'grid'; empty.style.display = 'none';
+    var CATS=[['all','All'],['business','Business'],['memorial','Memorial'],['home','Family & Home'],['carved','3D & Carved Art'],['gifts','Gifts']];
+    var fb=document.getElementById('gallery-filters');
+    if (fb) { fb.style.display='flex';
+      fb.innerHTML=CATS.filter(function(c){return c[0]==='all'||GALLERY.some(function(p){return p.cat===c[0];});}).map(function(c,k){
+        return '<button type="button" class="pf-btn'+(k?'':' active')+'" data-cat="'+c[0]+'">'+c[1]+'</button>';}).join('');
+      fb.onclick=function(e){ var b=e.target.closest('button'); if(!b) return;
+        [].forEach.call(fb.children,function(x){x.classList.toggle('active',x===b);});
+        var c=b.getAttribute('data-cat');
+        [].forEach.call(grid.children,function(el){ el.style.display=(c==='all'||el.getAttribute('data-cat')===c)?'':'none'; }); };
+    }
     grid.innerHTML = GALLERY.map(function(p,i){
-      return '<button type="button" style="aspect-ratio:1;border-radius:10px;overflow:hidden;background:#111;border:1px solid var(--border);cursor:pointer;padding:0;" onclick="openLightboxApp('+i+')">'
+      return '<button type="button" data-cat="'+escHtml(p.cat||'')+'" title="'+escHtml(p.caption||'')+'" style="aspect-ratio:1;border-radius:10px;overflow:hidden;background:#111;border:1px solid var(--border);cursor:pointer;padding:0;" onclick="openLightboxApp('+i+')">'
         +'<img src="'+escHtml(p.src)+'" style="width:100%;height:100%;object-fit:cover;" loading="lazy" alt="'+escHtml(p.caption||'SieCraft custom piece')+'"></button>';
     }).join('');
   });
