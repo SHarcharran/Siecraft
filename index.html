@@ -316,6 +316,11 @@ body {
 .price-card.popular { border-color:rgba(212,32,32,.4); }
 .popular-badge { position:absolute;top:-1px;right:14px;background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:0 0 6px 6px; }
 .pc-emoji { font-size:28px;margin-bottom:10px; }
+.pc-photo { margin:-20px -20px 14px;aspect-ratio:16/10;overflow:hidden;border-radius:14px 14px 0 0;background:linear-gradient(135deg,#1a1208,#0e0e0e); }
+.pc-photo img { width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s; }
+.price-card:hover .pc-photo img { transform:scale(1.04); }
+.pc-photo.pc-photo-emoji { display:flex;align-items:center;justify-content:center;font-size:44px;aspect-ratio:16/6; }
+@media (prefers-reduced-motion:reduce){ .pc-photo img{transition:none} }
 .pc-name { font-family:var(--bebas);font-size:17px;letter-spacing:.04em;color:#fff;margin-bottom:4px; }
 .pc-price { font-family:var(--mono);font-size:20px;font-weight:700;color:var(--red);margin-bottom:6px; }
 .pc-desc { font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px; }
@@ -1121,14 +1126,14 @@ function showTab(id) {
 // ═══════════════════════════════════════════
 var PRICING_DATA = [
   {emoji:'🏡',name:'Address Plaque',price:'$45–$90',cat:'signs',desc:'Cedar outdoor or walnut indoor. House number + street name.'},
-  {emoji:'🪵',name:'Family Name Sign',price:'$55–$110',cat:'signs',desc:'"The [Name] Family" — multiple sizes and wood options.'},
-  {emoji:'🕊️',name:'Memorial Sign',price:'$65–$180',cat:'signs',desc:'Indoor plaques and outdoor garden signs.'},
-  {emoji:'🐾',name:'Pet Memorial Plaque',price:'$45–$90',cat:'signs',desc:'Your pet\'s name, dates and a short message. Indoor plaque or garden sign.'},
-  {emoji:'🖼️',name:'Custom Quote Sign',price:'$55–$130',cat:'signs',desc:'Any text, any size. Routed or laser engraved in real wood.'},
+  {emoji:'🪵',img:'/img/gallery/francis-family-sign.jpg',pos:'50% 55%',name:'Family Name Sign',price:'$55–$110',cat:'signs',desc:'"The [Name] Family" — multiple sizes and wood options.'},
+  {emoji:'🕊️',img:'/img/gallery/roxy-pet-memorial-2.jpg',pos:'50% 35%',name:'Memorial Sign',price:'$65–$180',cat:'signs',desc:'Indoor plaques and outdoor garden signs.'},
+  {emoji:'🐾',img:'/img/gallery/roxy-pet-memorial.jpg',pos:'50% 35%',name:'Pet Memorial Plaque',price:'$45–$90',cat:'signs',desc:'Your pet\'s name, dates and a short message. Indoor plaque or garden sign.'},
+  {emoji:'🖼️',img:'/img/gallery/love-four-legged.jpg',pos:'50% 50%',name:'Custom Quote Sign',price:'$55–$130',cat:'signs',desc:'Any text, any size. Routed or laser engraved in real wood.'},
   
-  {emoji:'🪵',name:'Coaster Set (4-pack)',price:'$30–$50',cat:'laser',desc:'Set of 4 engraved wood coasters. Custom design.'},
-  {emoji:'🔑',name:'Custom Keychain',price:'$8–$18',cat:'laser',desc:'Laser-cut wood with name, logo, or custom shape.'},
-  {emoji:'🏢',name:'Office Door Sign',price:'$45–$95',cat:'business',desc:'Professional name or room signs for offices.'},
+  {emoji:'🪵',img:'/img/gallery/lion-coasters.jpg',pos:'50% 30%',name:'Coaster Set (4-pack)',price:'$30–$50',cat:'laser',desc:'Set of 4 engraved wood coasters. Custom design.'},
+  {emoji:'🔑',img:'/img/gallery/heart-key-keychains.jpg',pos:'50% 50%',name:'Custom Keychain',price:'$8–$18',cat:'laser',desc:'Laser-cut wood with name, logo, or custom shape.'},
+  {emoji:'🏢',img:'/img/gallery/karen-hedge-office.jpg',pos:'50% 45%',name:'Office Door Sign',price:'$45–$95',cat:'business',desc:'Professional name or room signs for offices.'},
   {emoji:'🏆',name:'Award Plaque',price:'$65–$150',cat:'business',desc:'Recognition and achievement plaques.'},
   {emoji:'🎄',name:'Christmas Ornament',price:'$15–$28',cat:'seasonal',desc:'Personalized laser-cut wood ornaments.'},
 ];
@@ -1141,7 +1146,7 @@ function renderPricingApp() {
   grid.innerHTML = filtered.map(function(p){
     return '<div class="price-card'+(p.popular?' popular':'')+'">'
       +(p.popular?'<div class="popular-badge">'+p.popular+'</div>':'')
-      +'<div class="pc-emoji">'+p.emoji+'</div>'
+      +(p.img?'<div class="pc-photo"><img src="'+p.img+'" alt="'+p.name+' made by SieCraft" loading="lazy" style="object-position:'+(p.pos||'50% 50%')+'"></div>':'<div class="pc-photo pc-photo-emoji">'+p.emoji+'</div>')
       +'<div class="pc-name">'+p.name+'</div>'
       +'<div class="pc-price">'+p.price+'</div>'
       +'<div class="pc-desc">'+p.desc+'</div>'
