@@ -65,11 +65,6 @@
   "cat": "home"
  },
  {
-  "src": "/img/gallery/elephant-3d-relief.jpg",
-  "caption": "Laser-engraved elephant and calf (3D effect)",
-  "cat": "carved"
- },
- {
   "src": "/img/gallery/elephant-head.jpg",
   "caption": "Carved elephant head wall piece",
   "cat": "carved"
@@ -95,16 +90,6 @@
   "cat": "carved"
  },
  {
-  "src": "/img/gallery/shiva-plaque.jpg",
-  "caption": "Shiva carved plaque",
-  "cat": "carved"
- },
- {
-  "src": "/img/gallery/hanuman-circle.jpg",
-  "caption": "Hanuman carved plaque",
-  "cat": "carved"
- },
- {
   "src": "/img/gallery/om-mandala.jpg",
   "caption": "Om mandala carving",
   "cat": "carved"
@@ -113,16 +98,6 @@
   "src": "/img/gallery/buddha-plaque.jpg",
   "caption": "Buddha carved plaque",
   "cat": "carved"
- },
- {
-  "src": "/img/gallery/hanuman-cutout.jpg",
-  "caption": "Hanuman cut-out carving",
-  "cat": "carved"
- },
- {
-  "src": "/img/gallery/heart-key-keychains.jpg",
-  "caption": "Laser-engraved heart-and-key couple keychains",
-  "cat": "gifts"
  },
  {
   "src": "/img/gallery/slate-coasters.jpg",
