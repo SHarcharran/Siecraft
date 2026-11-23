@@ -52,6 +52,7 @@ h1 span{background:linear-gradient(90deg,#fff,#fde68a 60%,var(--gold));-webkit-b
 .stage.set .piece{display:none}.stage.set .fan{display:flex}
 .fan img{position:absolute;width:min(44%,44vh);height:auto;border-radius:6%;box-shadow:0 18px 26px rgba(0,0,0,.55);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 .fan.slate img{border-radius:3%}
+.fan.round img{border-radius:50%}
 .scan{position:absolute;left:0;right:0;height:36%;top:-40%;background:linear-gradient(180deg,transparent,rgba(245,185,66,.0) 30%,rgba(245,185,66,.22) 92%,rgba(253,230,138,.8) 100%);mix-blend-mode:screen;pointer-events:none;opacity:0;z-index:3}
 .stage.scanning .scan{animation:scan .9s linear 1;opacity:1}
 @keyframes scan{from{top:-40%}to{top:105%}}
@@ -177,6 +178,10 @@ footer{max-width:1180px;margin:0 auto;padding:10px 16px 30px;color:var(--dim);fo
         <div class="lab">05 · Material <b id="mat-hint"></b></div>
         <div class="seg" id="mats"></div>
       </div>
+      <div class="step" id="shape-step">
+        <div class="lab">Shape <b id="shape-hint"></b></div>
+        <div class="seg" id="shapes"></div>
+      </div>
       <div class="step" id="qty-step">
         <div class="lab">06 · Quantity <b id="qty-hint"></b></div>
         <div class="seg" id="qtys"></div>
@@ -231,14 +236,14 @@ const CATS={all:'All',split:'Split',wreath:'Wreath',bless:'Bless & Welcome',flor
 const TAGS={split:'02 03 06 07 08 10 11 13 14 16 17 18 19 20 22 24 25 26 29 31 33 44',wreath:'01 04 05 09 10 15 21 27 28 30 32 34 36 38 39 40 41 42',bless:'01 12 34 37 47 49',floral:'16 42 43 44',people:'17 23 30 52',home:'50 51 52 53 54',frame:'35 45 46 48'};
 const FONTS=[{id:'classic',label:'Classic',css:'700 {s}px "Playfair Display", Georgia, serif',upper:true},{id:'script',label:'Script',css:'{s}px "Great Vibes", cursive',upper:false,scale:1.35},{id:'modern',label:'Modern',css:'700 {s}px Montserrat, Arial, sans-serif',upper:true,track:.08}];
 const PRODUCTS=[
-  {id:'coaster',label:'Coaster',sub:'4" square',mats:['wood','slate'],qty:true,machine:'LASER',size:'4" COASTER'},
+  {id:'coaster',label:'Coaster',sub:'4"',mats:['wood','slate'],qty:true,machine:'LASER',size:'4" COASTER'},
   {id:'sign12',label:'Sign 12"',sub:'laser',mats:['wood'],qty:false,machine:'LASER',size:'12" ROUND SIGN',round:true},
   {id:'sign18',label:'Sign 18"',sub:'CNC carved',mats:['wood'],qty:false,machine:'CNC',size:'18" ROUND SIGN',round:true}];
 const MATS=[{id:'wood',label:'Wood',sub:'maple'},{id:'slate',label:'Slate',sub:'natural stone'}];
 const PRICES={coaster:{wood:{1:10,4:30},slate:{1:12,4:35}},sign12:{wood:{1:45}},sign18:{wood:{1:95}}};
 let META=[],BOX={},st={},imgs={};
 const qs=new URLSearchParams(location.search);
-st={t:/^\d\d$/.test(qs.get('t')||'')?qs.get('t'):'02',name:(qs.get('n')||'Smith').slice(0,16),est:(qs.get('e')||'').replace(/\D/g,'').slice(0,4),font:FONTS.some(f=>f.id===qs.get('f'))?qs.get('f'):'classic',prod:PRODUCTS.some(p=>p.id===qs.get('p'))?qs.get('p'):'coaster',mat:qs.get('m')==='slate'?'slate':'wood',qty:qs.get('q')==='4'?4:1,cat:'all'};
+st={t:/^\d\d$/.test(qs.get('t')||'')?qs.get('t'):'02',name:(qs.get('n')||'Smith').slice(0,16),est:(qs.get('e')||'').replace(/\D/g,'').slice(0,4),font:FONTS.some(f=>f.id===qs.get('f'))?qs.get('f'):'classic',prod:PRODUCTS.some(p=>p.id===qs.get('p'))?qs.get('p'):'coaster',mat:qs.get('m')==='slate'?'slate':'wood',qty:qs.get('q')==='4'?4:1,shape:qs.get('s')==='round'?'round':'square',cat:'all'};
 
 fetch(IMG+'meta.json').then(r=>r.json()).then(m=>{META=m;m.forEach(x=>BOX[x.id]=x.box);if(!BOX.hasOwnProperty(st.t))st.t='02';build();render(true)}).catch(()=>{$('#note').textContent='The designs could not load. Text (929) 371-0501 and we will help you order.'});
 
@@ -248,6 +253,7 @@ function build(){
   $('#fonts').innerHTML=FONTS.map(f=>`<button data-f="${f.id}" style="font-family:${f.id==='script'?'Great Vibes,cursive;font-size:20px':f.id==='classic'?'Playfair Display,serif':'Montserrat,sans-serif'}">${f.label}</button>`).join('');
   $('#prods').innerHTML=PRODUCTS.map(p=>`<button data-p="${p.id}">${p.label}<small>${p.sub}</small></button>`).join('');
   $('#mats').innerHTML=MATS.map(m=>`<button data-m="${m.id}">${m.label}<small>${m.sub}</small></button>`).join('');
+  $('#shapes').innerHTML=`<button data-s="square">Square<small>4" × 4"</small></button><button data-s="round">Round<small>4" across</small></button>`;
   $('#qtys').innerHTML=`<button data-q="1">Single<small>1 coaster</small></button><button data-q="4">Set of 4<small>gift set</small></button>`;
   strip();
   $('#filters').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.cat=b.dataset.c;strip();marks()};
@@ -257,6 +263,7 @@ function build(){
   $('#fonts').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.font=b.dataset.f;render()};
   $('#prods').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.prod=b.dataset.p;const p=prod();if(!p.mats.includes(st.mat))st.mat=p.mats[0];if(!p.qty)st.qty=1;render(true)};
   $('#mats').onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;st.mat=b.dataset.m;render(true)};
+  $('#shapes').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.shape=b.dataset.s;render(true)};
   $('#qtys').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.qty=+b.dataset.q;render(true)};
   $('#go').onclick=openOrder;
   tilt();
@@ -267,6 +274,9 @@ function strip(){
   marks();
 }
 function prod(){return PRODUCTS.find(p=>p.id===st.prod)}
+function hasShape(){return st.prod==='coaster'&&st.mat==='slate'}
+function isRound(){return prod().round||(hasShape()&&st.shape==='round')}
+function sizeLabel(){return hasShape()?(st.shape==='round'?'4" ROUND COASTER':'4" SQUARE COASTER'):prod().size}
 function font(){return FONTS.find(f=>f.id===st.font)}
 function price(){return PRICES[st.prod][st.mat][st.qty]}
 function marks(){
@@ -278,6 +288,8 @@ function marks(){
   $$('#mats button').forEach(b=>{b.classList.toggle('on',b.dataset.m===st.mat);b.disabled=!p.mats.includes(b.dataset.m)});
   $$('#qtys button').forEach(b=>b.classList.toggle('on',+b.dataset.q===st.qty));
   $('#qty-step').style.display=p.qty?'':'none';
+  $$('#shapes button').forEach(b=>b.classList.toggle('on',b.dataset.s===st.shape));
+  $('#shape-step').style.display=hasShape()?'':'none';
 }
 function load(src){if(imgs[src])return imgs[src];imgs[src]=new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});return imgs[src]}
 let seq=0;
@@ -285,15 +297,15 @@ async function render(scan){
   marks();
   const p=prod(),f=font(),my=++seq;
   $('#tpl-name').textContent='#'+st.t+(BOX[st.t]?'':' · name added in your proof');
-  $('#font-name').textContent=f.label;$('#prod-hint').textContent=p.size.toLowerCase();
+  $('#font-name').textContent=f.label;$('#prod-hint').textContent=sizeLabel().toLowerCase();$('#shape-hint').textContent=st.shape;
   $('#mat-hint').textContent=st.prod==='coaster'?'':'wood only for signs';
   $('#qty-hint').textContent=st.qty===4?'set of 4':'single';
   $('#hud-tpl').textContent='DESIGN '+st.t;$('#hud-mach').textContent=p.machine;$('#hud-mach').className='chip '+(p.machine==='CNC'?'cnc':'laser');
-  $('#hud-mat').textContent=st.mat.toUpperCase();$('#hud-size').textContent=(st.qty===4?'4 × ':'')+p.size;
+  $('#hud-mat').textContent=st.mat.toUpperCase();$('#hud-size').textContent=(st.qty===4?'4 × ':'')+sizeLabel();
   $('#price').firstChild.nodeValue='$'+price();
   $('#price-sub').textContent=`${st.mat==='slate'?'Slate':'Wood'} ${p.label.toLowerCase()}${p.qty?' · '+(st.qty===4?'set of 4':'single'):''} · ${p.machine==='CNC'?'CNC-carved':'laser-engraved'}`;
-  $('#piece').className='piece '+(p.round?'round':st.mat==='slate'?'slate':'square');
-  $('#fan').className='fan'+(st.mat==='slate'?' slate':'');
+  $('#piece').className='piece '+(isRound()?'round':st.mat==='slate'?'slate':'square');
+  $('#fan').className='fan'+(isRound()?' round':st.mat==='slate'?' slate':'');
   $('#stage').classList.toggle('set',p.qty&&st.qty===4);
   if(scan){const s=$('#stage');s.classList.remove('scanning');void s.offsetWidth;s.classList.add('scanning')}
   try{await document.fonts.load(f.css.replace('{s}','40'))}catch(e){}
@@ -328,7 +340,7 @@ function fan(){
   const src=$('#cv').toDataURL('image/jpeg',0.82),T=['translate(-62%,-30%) rotate(-12deg)','translate(-20%,-42%) rotate(-3deg)','translate(22%,-30%) rotate(7deg)','translate(-2%,18%) rotate(-1deg)'];
   $('#fan').innerHTML=T.map(t=>`<img src="${src}" alt="" style="transform:${t}">`).join('');
 }
-function url(){const u=new URL(location.href);u.search=new URLSearchParams({t:st.t,n:st.name,e:st.est,f:st.font,p:st.prod,m:st.mat,q:st.qty}).toString();try{history.replaceState(null,'',u)}catch(e){}}
+function url(){const u=new URL(location.href);u.search=new URLSearchParams({t:st.t,n:st.name,e:st.est,f:st.font,p:st.prod,m:st.mat,q:st.qty,s:st.shape}).toString();try{history.replaceState(null,'',u)}catch(e){}}
 function tilt(){
   const stage=$('#stage'),t=$('#tilt');const set=(x,y)=>{t.style.transform=`rotateY(${(x*12).toFixed(2)}deg) rotateX(${(-y*9).toFixed(2)}deg)`};
   stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();set((e.clientX-r.left)/r.width-.5,(e.clientY-r.top)/r.height-.5)});
@@ -337,7 +349,7 @@ function tilt(){
 }
 // order
 let delivery='pickup';
-function summary(){const p=prod();return `Design <b>#${st.t}</b> · <b>"${esc(st.name.trim()||'(name in notes)')}"</b>${st.est.length===4?' · Est. '+st.est:''} · ${font().label} lettering<br>${st.mat==='slate'?'Slate':'Wood'} ${p.label.toLowerCase()} (${p.size.toLowerCase()})${p.qty?' · '+(st.qty===4?'set of 4':'single'):''} · ${p.machine==='CNC'?'CNC-carved':'laser-engraved'}<br>Price <b>$${price()}</b> + shipping if shipped`}
+function summary(){const p=prod();return `Design <b>#${st.t}</b> · <b>"${esc(st.name.trim()||'(name in notes)')}"</b>${st.est.length===4?' · Est. '+st.est:''} · ${font().label} lettering<br>${st.mat==='slate'?'Slate':'Wood'} ${p.label.toLowerCase()} (${sizeLabel().toLowerCase()})${p.qty?' · '+(st.qty===4?'set of 4':'single'):''} · ${p.machine==='CNC'?'CNC-carved':'laser-engraved'}<br>Price <b>$${price()}</b> + shipping if shipped`}
 function openOrder(){$('#osum').innerHTML=summary();$('#oerr').textContent='';$('#dlg').showModal()}
 $('#ocancel').onclick=()=>$('#dlg').close();
 $('#odel').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;delivery=b.dataset.v;$$('#odel button').forEach(x=>x.classList.toggle('on',x===b));$('#ozipw').style.display=delivery==='ship'?'':'none'});
@@ -347,7 +359,7 @@ $('#oform').addEventListener('submit',async e=>{
   btn.disabled=true;btn.textContent='Sending…';
   let photo=null;try{photo=$('#cv').toDataURL('image/jpeg',0.85).split(',')[1]}catch(err){}
   const body={fname:f.fname,lname:f.lname,email:f.email,phone:f.phone,website:f.website,
-    type:'Family Monogram '+(p.qty?'Coaster':'Sign'),material:st.mat==='slate'?'Slate':'Wood (maple)',size:p.size.toLowerCase(),qty:p.qty?(st.qty===4?'Set of 4':'1'):'1',finish:p.machine==='CNC'?'CNC-carved':'Laser-engraved',
+    type:'Family Monogram '+(p.qty?'Coaster':'Sign'),material:st.mat==='slate'?'Slate':'Wood (maple)',size:sizeLabel().toLowerCase(),qty:p.qty?(st.qty===4?'Set of 4':'1'):'1',finish:p.machine==='CNC'?'CNC-carved':'Laser-engraved',
     delivery,zip:f.zip||'',
     text:`Monogram design #${st.t} (Jozoor 54 bundle, file ${st.t}.svg)\nName: "${st.name.trim()}"${st.est.length===4?' · Est. '+st.est:''} · ${font().label} lettering\nBuilder price: $${price()} + shipping or free pickup\nBuilder link: ${location.href}`,
     notes:f.notes||'',photos:photo?[{type:'image/jpeg',data:photo}]:[]};
