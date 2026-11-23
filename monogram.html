@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Family Monogram Builder · Wood &amp; Slate Coasters and Signs | SieCraft Orlando</title>
+<meta name="description" content="Pick one of 54 family monogram designs, type your family name, and choose wood or slate. Laser-engraved coasters and CNC-carved signs, made in Orlando, FL. Free design proof before we cut.">
+<link rel="canonical" href="https://siecraft.com/monogram">
+<meta property="og:title" content="Design your family monogram · SieCraft">
+<meta property="og:description" content="54 designs. Your family name. Wood or slate coasters and signs, made in Orlando.">
+<meta property="og:image" content="https://siecraft.com/og-image-v2.png">
+<meta name="theme-color" content="#080808">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700&family=Great+Vibes&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#D42020;--black:#080808;--card:#111118;--border:#1e1e2e;--text:#f0f0f0;--muted:#c4c4c8;--dim:#a1a1aa;--green:#34d399;--gold:#f5b942;--bebas:'Bebas Neue',sans-serif;--sans:'DM Sans',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,monospace;--glass:rgba(17,17,24,.72)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--black);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+a{color:inherit}
+.hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top));background:rgba(8,8,8,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--bebas);font-size:24px;letter-spacing:.06em;text-decoration:none}.logo b{color:var(--red);font-weight:400}
+.hd a.quote{font-size:13px;font-weight:800;color:#fff;background:var(--red);text-decoration:none;padding:8px 14px;border-radius:20px;white-space:nowrap}
+.sitenav{display:flex;gap:4px;overflow-x:auto;padding:8px 12px;border-bottom:1px solid var(--border);background:rgba(14,14,16,.97);scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex-shrink:0;white-space:nowrap;text-decoration:none;color:#e4e4e7;font-size:13px;font-weight:700;padding:7px 14px;border-radius:20px}
+.sitenav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.sitenav a.on{color:#fde68a;background:rgba(245,158,11,.14);box-shadow:inset 0 0 0 1px rgba(245,158,11,.45)}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 40px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1{font-family:var(--bebas);font-weight:400;font-size:clamp(40px,8vw,72px);line-height:.92;letter-spacing:.01em;margin:8px 0 6px}
+h1 span{background:linear-gradient(90deg,#fff,#fde68a 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--muted);max-width:640px;font-size:15px;line-height:1.5}
+.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:22px;margin-top:20px;align-items:start}
+@media(max-width:900px){.grid{display:block}.grid>.panel{margin-top:14px}}
+/* stage */
+.stage-wrap{position:sticky;top:76px}
+@media(max-width:900px){.stage-wrap{position:sticky;top:calc(57px + env(safe-area-inset-top));z-index:20;margin:0 -16px;padding:8px 16px 10px;background:#080808;box-shadow:0 14px 18px -12px rgba(0,0,0,.9);border-bottom:1px solid var(--border)}.stage{max-height:42vh}}
+.stage{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:1/1;width:100%;margin:0 auto;border:1px solid #2a2a3c;perspective:1100px;isolation:isolate;
+ background:radial-gradient(120% 80% at 50% -10%,#3a3a44 0%,#16161c 60%,#0c0c10 100%)}
+@media(max-width:900px){.stage{aspect-ratio:auto;height:42vh}}
+.stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:28px 28px;mask:radial-gradient(70% 70% at 50% 50%,#000,transparent);-webkit-mask:radial-gradient(70% 70% at 50% 50%,#000,transparent)}
+.tilt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d;transition:transform .25s ease-out}
+.piece{position:relative;height:78%;aspect-ratio:1/1;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.piece canvas{width:100%;height:100%;display:block;filter:drop-shadow(0 22px 26px rgba(0,0,0,.55)) drop-shadow(0 3px 4px rgba(0,0,0,.4))}
+.piece.round canvas{border-radius:50%}
+.piece.square canvas{border-radius:6%}
+.piece.slate canvas{border-radius:3%}
+.fan{position:absolute;inset:0;display:none;align-items:center;justify-content:center}
+.stage.set .piece{display:none}.stage.set .fan{display:flex}
+.fan img{position:absolute;width:min(44%,44vh);height:auto;border-radius:6%;box-shadow:0 18px 26px rgba(0,0,0,.55);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.fan.slate img{border-radius:3%}
+.scan{position:absolute;left:0;right:0;height:36%;top:-40%;background:linear-gradient(180deg,transparent,rgba(245,185,66,.0) 30%,rgba(245,185,66,.22) 92%,rgba(253,230,138,.8) 100%);mix-blend-mode:screen;pointer-events:none;opacity:0;z-index:3}
+.stage.scanning .scan{animation:scan .9s linear 1;opacity:1}
+@keyframes scan{from{top:-40%}to{top:105%}}
+.hud{position:absolute;inset:12px;pointer-events:none;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.88);z-index:4}
+.hud .c{position:absolute;width:18px;height:18px;border:2px solid rgba(255,255,255,.55)}
+.hud .tl{top:0;left:0;border-right:0;border-bottom:0;border-radius:6px 0 0 0}.hud .tr{top:0;right:0;border-left:0;border-bottom:0;border-radius:0 6px 0 0}
+.hud .bl{bottom:0;left:0;border-right:0;border-top:0;border-radius:0 0 0 6px}.hud .br{bottom:0;right:0;border-left:0;border-top:0;border-radius:0 0 6px 0}
+.hud .top{position:absolute;top:4px;left:28px;right:28px;display:flex;justify-content:space-between;gap:8px}
+.hud .bot{position:absolute;bottom:4px;left:28px;right:28px;display:flex;justify-content:space-between;gap:8px}
+.chip{background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:4px 8px;border-radius:7px;border:1px solid rgba(255,255,255,.14);white-space:nowrap}
+.chip.laser{color:#e2c8ff;border-color:rgba(167,139,250,.5)}.chip.cnc{color:#ffd0bd;border-color:rgba(251,146,60,.5)}
+.note{font-size:12.5px;color:var(--dim);margin-top:8px;line-height:1.45}
+/* panel */
+.panel{background:var(--glass);border:1px solid var(--border);border-radius:22px;padding:18px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.step{padding:14px 0;border-top:1px solid var(--border)}.step:first-child{border-top:0;padding-top:2px}
+.lab{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.lab b{color:var(--text);font-family:var(--sans);letter-spacing:0;text-transform:none;font-size:13px;font-weight:600}
+.filters{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:8px}.filters::-webkit-scrollbar{display:none}
+.filters button{flex:0 0 auto;background:transparent;border:1px solid #2a2a3c;color:var(--muted);border-radius:16px;padding:6px 11px;font:600 12.5px var(--sans);cursor:pointer}
+.filters button.on{background:var(--gold);border-color:var(--gold);color:#1a1200}
+.strip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.tpl{flex:0 0 auto;width:96px;scroll-snap-align:start;background:#0b0b12;border:1px solid #2a2a3c;border-radius:12px;padding:4px;cursor:pointer;position:relative}
+.tpl img{width:100%;aspect-ratio:1/1;border-radius:8px;display:block}
+.tpl span{position:absolute;top:7px;left:7px;font:500 10px var(--mono);background:rgba(0,0,0,.6);color:#fff;padding:1px 5px;border-radius:5px}
+.tpl.on{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,185,66,.25)}
+.inp{width:100%;background:#0b0b12;border:1px solid #2a2a3c;border-radius:14px;color:#fff;font:600 20px var(--sans);padding:13px 15px;outline:none;transition:border-color .2s,box-shadow .2s}
+.inp:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(245,185,66,.16)}
+.row2{display:grid;grid-template-columns:1fr 120px;gap:8px}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;background:#0b0b12;border:1px solid #2a2a3c;border-radius:14px;padding:4px}
+.seg button{background:transparent;border:0;border-radius:10px;color:var(--muted);padding:10px 6px;font:600 14px var(--sans);cursor:pointer;line-height:1.2}
+.seg button small{display:block;font:500 11px var(--mono);color:var(--dim);margin-top:2px}
+.seg button.on{background:var(--gold);color:#1a1200}.seg button.on small{color:#5a4300}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.fact{background:#0b0b12;border:1px solid var(--border);border-radius:12px;padding:10px}.fact b{display:block;font-size:13px}.fact span{font-size:12px;color:var(--dim)}
+/* buy bar */
+.buybar{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom));background:rgba(8,8,8,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--border)}
+.buybar .in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:12px;justify-content:space-between}
+.price{font-family:var(--bebas);font-size:38px;line-height:1;letter-spacing:.02em}
+.price small{display:block;font:500 11.5px var(--sans);color:var(--dim);letter-spacing:0;margin-top:2px}
+.go{border:0;border-radius:14px;background:var(--red);color:#fff;font:700 16px var(--sans);padding:15px 22px;cursor:pointer;box-shadow:0 8px 24px rgba(212,32,32,.35);white-space:nowrap}
+.go:active{transform:scale(.97)}
+dialog{border:1px solid var(--border);border-radius:20px;background:#101017;color:var(--text);padding:20px;width:min(520px,94vw);max-height:92vh}
+dialog::backdrop{background:rgba(0,0,0,.72);backdrop-filter:blur(4px)}
+dialog h2{font-family:var(--bebas);font-weight:400;font-size:32px;letter-spacing:.02em}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fl{display:block;margin-top:10px}.fl span{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.fl input,.fl textarea{width:100%;background:#0b0b12;border:1px solid #2a2a3c;border-radius:10px;color:#fff;padding:11px;font:16px var(--sans);outline:none}
+.fl input:focus,.fl textarea:focus{border-color:var(--gold)}
+.sum{background:#0b0b12;border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5}.sum b{color:#fff}
+.btnrow{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.ghost{background:transparent;border:1px solid #2a2a3c;color:var(--muted);border-radius:12px;padding:12px 16px;font:600 14px var(--sans);cursor:pointer}
+.err{color:#fca5a5;font-size:13px;margin-top:8px;min-height:1em}
+footer{max-width:1180px;margin:0 auto;padding:10px 16px 30px;color:var(--dim);font-size:13px;line-height:1.6}
+.toast{position:fixed;left:50%;top:84px;transform:translateX(-50%);background:#0f2a1f;border:1px solid #166534;color:#bbf7d0;padding:12px 16px;border-radius:12px;z-index:80;font-size:14px;display:none;max-width:92vw}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hd">
+  <a class="logo" href="/"><b>SIE</b>CRAFT</a>
+  <a class="quote" href="/#order">Get a Quote →</a>
+</header>
+<nav class="sitenav" aria-label="Site">
+  <a href="/">🏠 Home</a>
+  <a href="/name-sign">✨ Name Sign</a>
+  <a class="on" href="/monogram" aria-current="page">🏡 Monogram</a>
+  <a href="/#products">🛍️ Products</a>
+  <a href="/#shop">🛒 Shop</a>
+  <a href="/#order">📋 Order</a>
+  <a href="/#pricing">💰 Pricing</a>
+  <a href="/#gallery">📸 Gallery</a>
+  <a href="/#blog">📝 Blog</a>
+  <a href="/#about">📖 About</a>
+  <a href="/#faq">❓ FAQ</a>
+  <a href="/#contact">📍 Contact</a>
+</nav>
+
+<main class="wrap">
+  <div class="kicker"><i></i> Live engraving preview</div>
+  <h1><span>Your family name.</span><br>In wood or slate.</h1>
+  <p class="lede">Pick one of 54 designs, type your family name, and choose coasters or a sign. Laser-engraved or CNC-carved in Orlando, FL. You get a free design proof before we cut.</p>
+
+  <div class="grid">
+    <div class="stage-wrap">
+      <div class="stage" id="stage">
+        <div class="tilt" id="tilt">
+          <div class="piece square" id="piece"><canvas id="cv" width="720" height="720" aria-label="Preview of your family monogram"></canvas></div>
+          <div class="fan" id="fan"></div>
+        </div>
+        <div class="scan"></div>
+        <div class="hud">
+          <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+          <div class="top"><span class="chip" id="hud-tpl">DESIGN 02</span><span class="chip laser" id="hud-mach">LASER</span></div>
+          <div class="bot"><span class="chip" id="hud-mat">WOOD</span><span class="chip" id="hud-size">4" COASTER</span></div>
+        </div>
+      </div>
+      <p class="note" id="note">Preview only. Your proof shows the exact layout before anything is cut.</p>
+    </div>
+
+    <div class="panel">
+      <div class="step">
+        <div class="lab">01 · Design <b id="tpl-name">#02</b></div>
+        <div class="filters" id="filters"></div>
+        <div class="strip" id="strip"></div>
+      </div>
+      <div class="step">
+        <div class="lab">02 · Your name <b id="name-hint">Up to 16 characters</b></div>
+        <div class="row2">
+          <input class="inp" id="name" maxlength="16" autocomplete="off" autocapitalize="words" spellcheck="false" value="Smith" aria-label="Family name">
+          <input class="inp" id="est" maxlength="4" inputmode="numeric" placeholder="Est. year" aria-label="Established year (optional)">
+        </div>
+      </div>
+      <div class="step">
+        <div class="lab">03 · Lettering <b id="font-name">Classic</b></div>
+        <div class="seg" id="fonts"></div>
+      </div>
+      <div class="step">
+        <div class="lab">04 · Product <b id="prod-hint"></b></div>
+        <div class="seg" id="prods"></div>
+      </div>
+      <div class="step">
+        <div class="lab">05 · Material <b id="mat-hint"></b></div>
+        <div class="seg" id="mats"></div>
+      </div>
+      <div class="step" id="qty-step">
+        <div class="lab">06 · Quantity <b id="qty-hint"></b></div>
+        <div class="seg" id="qtys"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>Made in Orlando</b><span>Laser-engraved or CNC-carved</span></div>
+        <div class="fact"><b>Free design proof</b><span>You approve the layout before we cut</span></div>
+        <div class="fact"><b>Ships US-wide</b><span>Or free local pickup in Orlando</span></div>
+        <div class="fact"><b>Questions?</b><span>Text (929) 371-0501 · info@siecraft.com</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>Designs used under a commercial license. Prices include the coasters or sign. Shipping or free Orlando pickup is chosen when you order. Sales tax is added where it applies.</footer>
+
+<div class="buybar"><div class="in">
+  <div class="price" id="price">$10<small id="price-sub">Wood coaster · single</small></div>
+  <button class="go" id="go">Order this design</button>
+</div></div>
+
+<dialog id="dlg">
+  <form id="oform" method="dialog">
+    <h2>Order this design</h2>
+    <div class="sum" id="osum"></div>
+    <div class="f2">
+      <label class="fl"><span>First name</span><input name="fname" required autocomplete="given-name"></label>
+      <label class="fl"><span>Last name</span><input name="lname" required autocomplete="family-name"></label>
+    </div>
+    <label class="fl"><span>Email</span><input name="email" type="email" required autocomplete="email"></label>
+    <label class="fl"><span>Phone</span><input name="phone" type="tel" required autocomplete="tel"></label>
+    <div class="fl"><span>Pickup or ship?</span>
+      <div class="seg" id="odel"><button type="button" class="on" data-v="pickup">Free pickup<small>Orlando</small></button><button type="button" data-v="ship">Ship<small>US-wide</small></button></div>
+    </div>
+    <label class="fl" id="ozipw" style="display:none"><span>Ship-to ZIP code</span><input name="zip" inputmode="numeric" maxlength="5" autocomplete="postal-code"></label>
+    <label class="fl"><span>Anything else? (optional)</span><textarea name="notes" rows="2" maxlength="600" placeholder="Other names, a date, a different design detail…"></textarea></label>
+    <input name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+    <p class="note">We'll email your free design proof, exact total and payment link. Nothing is charged now.</p>
+    <div class="err" id="oerr"></div>
+    <div class="btnrow"><button type="button" class="ghost" id="ocancel">Cancel</button><button type="submit" class="go" id="osend">Send order</button></div>
+  </form>
+</dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+const esc=v=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const IMG='/img/monogram/';
+const CATS={all:'All',split:'Split',wreath:'Wreath',bless:'Bless & Welcome',floral:'Floral',people:'Family figures',home:'HOME',frame:'Frames'};
+const TAGS={split:'02 03 06 07 08 10 11 13 14 16 17 18 19 20 22 24 25 26 29 31 33 44',wreath:'01 04 05 09 10 15 21 27 28 30 32 34 36 38 39 40 41 42',bless:'01 12 34 37 47 49',floral:'16 42 43 44',people:'17 23 30 52',home:'50 51 52 53 54',frame:'35 45 46 48'};
+const FONTS=[{id:'classic',label:'Classic',css:'700 {s}px "Playfair Display", Georgia, serif',upper:true},{id:'script',label:'Script',css:'{s}px "Great Vibes", cursive',upper:false,scale:1.35},{id:'modern',label:'Modern',css:'700 {s}px Montserrat, Arial, sans-serif',upper:true,track:.08}];
+const PRODUCTS=[
+  {id:'coaster',label:'Coaster',sub:'4" square',mats:['wood','slate'],qty:true,machine:'LASER',size:'4" COASTER'},
+  {id:'sign12',label:'Sign 12"',sub:'laser',mats:['wood'],qty:false,machine:'LASER',size:'12" ROUND SIGN',round:true},
+  {id:'sign18',label:'Sign 18"',sub:'CNC carved',mats:['wood'],qty:false,machine:'CNC',size:'18" ROUND SIGN',round:true}];
+const MATS=[{id:'wood',label:'Wood',sub:'maple'},{id:'slate',label:'Slate',sub:'natural stone'}];
+const PRICES={coaster:{wood:{1:10,4:30},slate:{1:12,4:35}},sign12:{wood:{1:45}},sign18:{wood:{1:95}}};
+let META=[],BOX={},st={},imgs={};
+const qs=new URLSearchParams(location.search);
+st={t:/^\d\d$/.test(qs.get('t')||'')?qs.get('t'):'02',name:(qs.get('n')||'Smith').slice(0,16),est:(qs.get('e')||'').replace(/\D/g,'').slice(0,4),font:FONTS.some(f=>f.id===qs.get('f'))?qs.get('f'):'classic',prod:PRODUCTS.some(p=>p.id===qs.get('p'))?qs.get('p'):'coaster',mat:qs.get('m')==='slate'?'slate':'wood',qty:qs.get('q')==='4'?4:1,cat:'all'};
+
+fetch(IMG+'meta.json').then(r=>r.json()).then(m=>{META=m;m.forEach(x=>BOX[x.id]=x.box);if(!BOX.hasOwnProperty(st.t))st.t='02';build();render(true)}).catch(()=>{$('#note').textContent='The designs could not load. Text (929) 371-0501 and we will help you order.'});
+
+function build(){
+  $('#name').value=st.name;$('#est').value=st.est;
+  $('#filters').innerHTML=Object.entries(CATS).map(([k,v])=>`<button data-c="${k}">${v}</button>`).join('');
+  $('#fonts').innerHTML=FONTS.map(f=>`<button data-f="${f.id}" style="font-family:${f.id==='script'?'Great Vibes,cursive;font-size:20px':f.id==='classic'?'Playfair Display,serif':'Montserrat,sans-serif'}">${f.label}</button>`).join('');
+  $('#prods').innerHTML=PRODUCTS.map(p=>`<button data-p="${p.id}">${p.label}<small>${p.sub}</small></button>`).join('');
+  $('#mats').innerHTML=MATS.map(m=>`<button data-m="${m.id}">${m.label}<small>${m.sub}</small></button>`).join('');
+  $('#qtys').innerHTML=`<button data-q="1">Single<small>1 coaster</small></button><button data-q="4">Set of 4<small>gift set</small></button>`;
+  strip();
+  $('#filters').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.cat=b.dataset.c;strip();marks()};
+  $('#strip').onclick=e=>{const b=e.target.closest('.tpl');if(!b)return;st.t=b.dataset.t;render(true)};
+  $('#name').oninput=e=>{st.name=e.target.value.slice(0,16);render()};
+  $('#est').oninput=e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);st.est=e.target.value;render()};
+  $('#fonts').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.font=b.dataset.f;render()};
+  $('#prods').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.prod=b.dataset.p;const p=prod();if(!p.mats.includes(st.mat))st.mat=p.mats[0];if(!p.qty)st.qty=1;render(true)};
+  $('#mats').onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;st.mat=b.dataset.m;render(true)};
+  $('#qtys').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.qty=+b.dataset.q;render(true)};
+  $('#go').onclick=openOrder;
+  tilt();
+}
+function strip(){
+  const ids=META.map(m=>m.id).filter(id=>st.cat==='all'||TAGS[st.cat].split(' ').includes(id));
+  $('#strip').innerHTML=ids.map(id=>`<button class="tpl" data-t="${id}" aria-label="Design ${id}"><img src="${IMG}t-${id}.jpg" alt="" loading="lazy" width="90" height="90"><span>${id}</span></button>`).join('');
+  marks();
+}
+function prod(){return PRODUCTS.find(p=>p.id===st.prod)}
+function font(){return FONTS.find(f=>f.id===st.font)}
+function price(){return PRICES[st.prod][st.mat][st.qty]}
+function marks(){
+  $$('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.c===st.cat));
+  $$('.tpl').forEach(b=>b.classList.toggle('on',b.dataset.t===st.t));
+  $$('#fonts button').forEach(b=>b.classList.toggle('on',b.dataset.f===st.font));
+  $$('#prods button').forEach(b=>b.classList.toggle('on',b.dataset.p===st.prod));
+  const p=prod();
+  $$('#mats button').forEach(b=>{b.classList.toggle('on',b.dataset.m===st.mat);b.disabled=!p.mats.includes(b.dataset.m)});
+  $$('#qtys button').forEach(b=>b.classList.toggle('on',+b.dataset.q===st.qty));
+  $('#qty-step').style.display=p.qty?'':'none';
+}
+function load(src){if(imgs[src])return imgs[src];imgs[src]=new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});return imgs[src]}
+let seq=0;
+async function render(scan){
+  marks();
+  const p=prod(),f=font(),my=++seq;
+  $('#tpl-name').textContent='#'+st.t+(BOX[st.t]?'':' · name added in your proof');
+  $('#font-name').textContent=f.label;$('#prod-hint').textContent=p.size.toLowerCase();
+  $('#mat-hint').textContent=st.prod==='coaster'?'':'wood only for signs';
+  $('#qty-hint').textContent=st.qty===4?'set of 4':'single';
+  $('#hud-tpl').textContent='DESIGN '+st.t;$('#hud-mach').textContent=p.machine;$('#hud-mach').className='chip '+(p.machine==='CNC'?'cnc':'laser');
+  $('#hud-mat').textContent=st.mat.toUpperCase();$('#hud-size').textContent=(st.qty===4?'4 × ':'')+p.size;
+  $('#price').firstChild.nodeValue='$'+price();
+  $('#price-sub').textContent=`${st.mat==='slate'?'Slate':'Wood'} ${p.label.toLowerCase()}${p.qty?' · '+(st.qty===4?'set of 4':'single'):''} · ${p.machine==='CNC'?'CNC-carved':'laser-engraved'}`;
+  $('#piece').className='piece '+(p.round?'round':st.mat==='slate'?'slate':'square');
+  $('#fan').className='fan'+(st.mat==='slate'?' slate':'');
+  $('#stage').classList.toggle('set',p.qty&&st.qty===4);
+  if(scan){const s=$('#stage');s.classList.remove('scanning');void s.offsetWidth;s.classList.add('scanning')}
+  try{await document.fonts.load(f.css.replace('{s}','40'))}catch(e){}
+  let base;try{base=await load(`${IMG}${st.mat}-${st.t}.jpg`)}catch(e){return}
+  if(my!==seq)return;
+  draw(base);
+  if(p.qty&&st.qty===4)fan();
+  url();
+}
+function draw(base){
+  const cv=$('#cv'),g=cv.getContext('2d'),S=cv.width,f=font();
+  g.clearRect(0,0,S,S);g.drawImage(base,0,0,S,S);
+  const b=BOX[st.t];if(!b)return;
+  let txt=(st.name||'').trim();if(!txt)return;
+  if(f.upper)txt=txt.toUpperCase();
+  const x0=b[0]*S,y0=b[1]*S,x1=b[2]*S,y1=b[3]*S,w=x1-x0;let h=y1-y0;
+  const est=st.est.length===4?('EST. '+st.est):'';
+  const nameH=est?h*0.68:h;
+  let size=nameH*0.86*(f.scale||1);
+  const setF=s=>{g.font=f.css.replace('{s}',Math.round(s));if(f.track&&'letterSpacing' in g)g.letterSpacing=Math.round(s*f.track)+'px';else if('letterSpacing' in g)g.letterSpacing='0px'};
+  setF(size);let tw=g.measureText(txt).width;
+  if(tw>w){size*=w/tw;setF(size)}
+  const ink=st.mat==='slate'?'rgba(218,214,206,.95)':'rgba(70,40,20,.94)';
+  g.fillStyle=ink;g.textAlign='center';g.textBaseline='middle';
+  const cy=y0+nameH/2+(f.id==='script'?nameH*0.04:0);
+  if(st.mat==='slate'){g.save();g.fillStyle='rgba(30,30,34,.5)';g.fillText(txt,(x0+x1)/2+1,cy+1);g.restore()}
+  g.fillText(txt,(x0+x1)/2,cy);
+  if(est){g.font='500 '+Math.round(Math.min(h*0.2,w/9))+'px "Playfair Display", Georgia, serif';if('letterSpacing' in g)g.letterSpacing=Math.round(h*0.03)+'px';g.fillText(est,(x0+x1)/2,y0+nameH+(h-nameH)/2)}
+  if('letterSpacing' in g)g.letterSpacing='0px';
+}
+function fan(){
+  const src=$('#cv').toDataURL('image/jpeg',0.82),T=['translate(-62%,-30%) rotate(-12deg)','translate(-20%,-42%) rotate(-3deg)','translate(22%,-30%) rotate(7deg)','translate(-2%,18%) rotate(-1deg)'];
+  $('#fan').innerHTML=T.map(t=>`<img src="${src}" alt="" style="transform:${t}">`).join('');
+}
+function url(){const u=new URL(location.href);u.search=new URLSearchParams({t:st.t,n:st.name,e:st.est,f:st.font,p:st.prod,m:st.mat,q:st.qty}).toString();try{history.replaceState(null,'',u)}catch(e){}}
+function tilt(){
+  const stage=$('#stage'),t=$('#tilt');const set=(x,y)=>{t.style.transform=`rotateY(${(x*12).toFixed(2)}deg) rotateX(${(-y*9).toFixed(2)}deg)`};
+  stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();set((e.clientX-r.left)/r.width-.5,(e.clientY-r.top)/r.height-.5)});
+  stage.addEventListener('pointerleave',()=>set(0,0));
+  window.addEventListener('deviceorientation',e=>{if(e.gamma==null)return;set(Math.max(-1,Math.min(1,e.gamma/40))*.5,Math.max(-1,Math.min(1,(e.beta-45)/40))*.5)});
+}
+// order
+let delivery='pickup';
+function summary(){const p=prod();return `Design <b>#${st.t}</b> · <b>"${esc(st.name.trim()||'(name in notes)')}"</b>${st.est.length===4?' · Est. '+st.est:''} · ${font().label} lettering<br>${st.mat==='slate'?'Slate':'Wood'} ${p.label.toLowerCase()} (${p.size.toLowerCase()})${p.qty?' · '+(st.qty===4?'set of 4':'single'):''} · ${p.machine==='CNC'?'CNC-carved':'laser-engraved'}<br>Price <b>$${price()}</b> + shipping if shipped`}
+function openOrder(){$('#osum').innerHTML=summary();$('#oerr').textContent='';$('#dlg').showModal()}
+$('#ocancel').onclick=()=>$('#dlg').close();
+$('#odel').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;delivery=b.dataset.v;$$('#odel button').forEach(x=>x.classList.toggle('on',x===b));$('#ozipw').style.display=delivery==='ship'?'':'none'});
+$('#oform').addEventListener('submit',async e=>{
+  e.preventDefault();const f=Object.fromEntries(new FormData(e.target)),p=prod(),btn=$('#osend');
+  if(delivery==='ship'&&!/^\d{5}$/.test(f.zip||'')){$('#oerr').textContent='Enter a 5-digit ZIP code for shipping.';return}
+  btn.disabled=true;btn.textContent='Sending…';
+  let photo=null;try{photo=$('#cv').toDataURL('image/jpeg',0.85).split(',')[1]}catch(err){}
+  const body={fname:f.fname,lname:f.lname,email:f.email,phone:f.phone,website:f.website,
+    type:'Family Monogram '+(p.qty?'Coaster':'Sign'),material:st.mat==='slate'?'Slate':'Wood (maple)',size:p.size.toLowerCase(),qty:p.qty?(st.qty===4?'Set of 4':'1'):'1',finish:p.machine==='CNC'?'CNC-carved':'Laser-engraved',
+    delivery,zip:f.zip||'',
+    text:`Monogram design #${st.t} (Jozoor 54 bundle, file ${st.t}.svg)\nName: "${st.name.trim()}"${st.est.length===4?' · Est. '+st.est:''} · ${font().label} lettering\nBuilder price: $${price()} + shipping or free pickup\nBuilder link: ${location.href}`,
+    notes:f.notes||'',photos:photo?[{type:'image/jpeg',data:photo}]:[]};
+  try{
+    const r=await fetch('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok)throw new Error(j.error&&j.error!=='send_failed'&&j.error!=='not_configured'?j.error:'Could not send right now.');
+    $('#dlg').close();toast('Order sent! Check your email. We\'ll send your free design proof and payment link.');
+  }catch(err){$('#oerr').textContent=err.message+' Or text (929) 371-0501.'}
+  btn.disabled=false;btn.textContent='Send order';
+});
+function toast(t){const el=$('#toast');el.textContent=t;el.style.display='block';clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',6000)}
+})();
+</script>
+<script src="/js/site-notice.js" defer></script>
+</body>
+</html>
