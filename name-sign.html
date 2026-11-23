@@ -23,6 +23,12 @@ a{color:inherit}
 .hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top));background:rgba(8,8,8,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
 .logo{font-family:var(--bebas);font-size:24px;letter-spacing:.06em;text-decoration:none}.logo b{color:var(--red);font-weight:400}
 .hd a.back{font-size:13px;color:var(--muted);text-decoration:none;border:1px solid var(--border);padding:7px 12px;border-radius:20px}
+.hd a.quote{font-size:13px;font-weight:800;color:#fff;background:var(--red);text-decoration:none;padding:8px 14px;border-radius:20px;white-space:nowrap}
+.sitenav{display:flex;gap:4px;overflow-x:auto;padding:8px 12px;border-bottom:1px solid var(--border);background:rgba(14,14,16,.97);scrollbar-width:none}
+.sitenav::-webkit-scrollbar{display:none}
+.sitenav a{flex-shrink:0;white-space:nowrap;text-decoration:none;color:#e4e4e7;font-size:13px;font-weight:700;padding:7px 14px;border-radius:20px}
+.sitenav a:hover{background:rgba(255,255,255,.12);color:#fff}
+.sitenav a.on{color:#fde68a;background:rgba(245,158,11,.14);box-shadow:inset 0 0 0 1px rgba(245,158,11,.45)}
 .wrap{max-width:1180px;margin:0 auto;padding:18px 16px 40px}
 .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--red);text-transform:uppercase;display:flex;align-items:center;gap:8px}
 .kicker i{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red);animation:pulse 1.8s infinite}
@@ -150,8 +156,21 @@ footer{max-width:1180px;margin:0 auto;padding:10px 16px 30px;color:var(--dim);fo
 <body>
 <header class="hd">
   <a class="logo" href="/"><b>SIE</b>CRAFT</a>
-  <a class="back" href="/#shop">← Shop</a>
+  <a class="quote" href="/#order">Get a Quote →</a>
 </header>
+<nav class="sitenav" aria-label="Site">
+  <a href="/">🏠 Home</a>
+  <a class="on" href="/name-sign" aria-current="page">✨ Name Sign</a>
+  <a href="/#products">🛍️ Products</a>
+  <a href="/#shop">🛒 Shop</a>
+  <a href="/#order">📋 Order</a>
+  <a href="/#pricing">💰 Pricing</a>
+  <a href="/#gallery">📸 Gallery</a>
+  <a href="/#blog">📝 Blog</a>
+  <a href="/#about">📖 About</a>
+  <a href="/#faq">❓ FAQ</a>
+  <a href="/#contact">📍 Contact</a>
+</nav>
 
 <main class="wrap">
   <div class="kicker"><i></i> Live CNC preview</div>
