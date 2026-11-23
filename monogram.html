@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Family Monogram Builder · Wood &amp; Slate Coasters and Signs | SieCraft Orlando</title>
-<meta name="description" content="Pick one of 54 family monogram designs, type your family name, and choose wood or slate. Laser-engraved coasters and CNC-carved signs, made in Orlando, FL. Free design proof before we cut.">
+<meta name="description" content="Pick one of 54 family monogram designs, type your family name, and choose wood or slate. Laser-engraved coasters and signs, made in Orlando, FL. Free design proof before we cut.">
 <link rel="canonical" href="https://siecraft.com/monogram">
 <meta property="og:title" content="Design your family monogram · SieCraft">
-<meta property="og:description" content="54 designs. Your family name. Wood or slate coasters and signs, made in Orlando.">
+<meta property="og:description" content="54 designs. Your family name. Wood or slate coasters and signs, laser-engraved in Orlando.">
 <meta property="og:image" content="https://siecraft.com/og-image-v2.png">
 <meta name="theme-color" content="#080808">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -133,7 +133,7 @@ footer{max-width:1180px;margin:0 auto;padding:10px 16px 30px;color:var(--dim);fo
 <main class="wrap">
   <div class="kicker"><i></i> Live engraving preview</div>
   <h1><span>Your family name.</span><br>In wood or slate.</h1>
-  <p class="lede">Pick one of 54 designs, type your family name, and choose coasters or a sign. Laser-engraved or CNC-carved in Orlando, FL. You get a free design proof before we cut.</p>
+  <p class="lede">Pick one of 54 designs, type your family name, and choose coasters or a sign. Laser-engraved in Orlando, FL. You get a free design proof before we cut.</p>
 
   <div class="grid">
     <div class="stage-wrap">
@@ -182,7 +182,7 @@ footer{max-width:1180px;margin:0 auto;padding:10px 16px 30px;color:var(--dim);fo
         <div class="seg" id="qtys"></div>
       </div>
       <div class="facts">
-        <div class="fact"><b>Made in Orlando</b><span>Laser-engraved or CNC-carved</span></div>
+        <div class="fact"><b>Made in Orlando</b><span>Laser-engraved in Orlando</span></div>
         <div class="fact"><b>Free design proof</b><span>You approve the layout before we cut</span></div>
         <div class="fact"><b>Ships US-wide</b><span>Or free local pickup in Orlando</span></div>
         <div class="fact"><b>Questions?</b><span>Text (929) 371-0501 · info@siecraft.com</span></div>
@@ -232,10 +232,9 @@ const TAGS={split:'02 03 06 07 08 10 11 13 14 16 17 18 19 20 22 24 25 26 29 31 3
 const FONTS=[{id:'classic',label:'Classic',css:'700 {s}px "Playfair Display", Georgia, serif',upper:true},{id:'script',label:'Script',css:'{s}px "Great Vibes", cursive',upper:false,scale:1.35},{id:'modern',label:'Modern',css:'700 {s}px Montserrat, Arial, sans-serif',upper:true,track:.08}];
 const PRODUCTS=[
   {id:'coaster',label:'Coaster',sub:'4" square',mats:['wood','slate'],qty:true,machine:'LASER',size:'4" COASTER'},
-  {id:'sign12',label:'Sign 12"',sub:'laser',mats:['wood'],qty:false,machine:'LASER',size:'12" ROUND SIGN',round:true},
-  {id:'sign18',label:'Sign 18"',sub:'CNC carved',mats:['wood'],qty:false,machine:'CNC',size:'18" ROUND SIGN',round:true}];
+  {id:'sign12',label:'Sign 12"',sub:'round',mats:['wood'],qty:false,machine:'LASER',size:'12" ROUND SIGN',round:true}];
 const MATS=[{id:'wood',label:'Wood',sub:'maple'},{id:'slate',label:'Slate',sub:'natural stone'}];
-const PRICES={coaster:{wood:{1:10,4:30},slate:{1:12,4:35}},sign12:{wood:{1:45}},sign18:{wood:{1:95}}};
+const PRICES={coaster:{wood:{1:10,4:30},slate:{1:12,4:35}},sign12:{wood:{1:45}}};
 let META=[],BOX={},st={},imgs={};
 const qs=new URLSearchParams(location.search);
 st={t:/^\d\d$/.test(qs.get('t')||'')?qs.get('t'):'02',name:(qs.get('n')||'Smith').slice(0,16),est:(qs.get('e')||'').replace(/\D/g,'').slice(0,4),font:FONTS.some(f=>f.id===qs.get('f'))?qs.get('f'):'classic',prod:PRODUCTS.some(p=>p.id===qs.get('p'))?qs.get('p'):'coaster',mat:qs.get('m')==='slate'?'slate':'wood',qty:qs.get('q')==='4'?4:1,cat:'all'};
