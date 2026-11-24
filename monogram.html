@@ -242,10 +242,13 @@ const PRODUCTS=[
 const MATS=[{id:'wood',label:'Wood',sub:'solid hardwood'},{id:'slate',label:'Slate',sub:'natural stone'}];
 const PRICES={coaster:{wood:{1:8,4:24},slate:{1:12,4:35}},sign12:{wood:{1:45}},sign18:{wood:{1:95}}};
 let META=[],BOX={},st={},imgs={};
+const SIGNONLY=TAGS.home.split(' ');
+function okFor(id){return st.prod!=='coaster'||!SIGNONLY.includes(id)}
+function fixPick(){if(st.prod==='coaster'){if(st.cat==='home')st.cat='all';if(!okFor(st.t))st.t='02'}}
 const qs=new URLSearchParams(location.search);
 st={t:/^\d\d$/.test(qs.get('t')||'')?qs.get('t'):'02',name:(qs.get('n')||'Smith').slice(0,16),est:(qs.get('e')||'').replace(/\D/g,'').slice(0,4),font:FONTS.some(f=>f.id===qs.get('f'))?qs.get('f'):'classic',prod:PRODUCTS.some(p=>p.id===qs.get('p'))?qs.get('p'):'coaster',mat:qs.get('m')==='slate'?'slate':'wood',qty:qs.get('q')==='4'?4:1,shape:qs.get('s')==='round'?'round':'square',cat:'all'};
 
-fetch(IMG+'meta.json').then(r=>r.json()).then(m=>{META=m;m.forEach(x=>BOX[x.id]=x.box);if(!BOX.hasOwnProperty(st.t))st.t='02';build();render(true)}).catch(()=>{$('#note').textContent='The designs could not load. Text (929) 371-0501 and we will help you order.'});
+fetch(IMG+'meta.json').then(r=>r.json()).then(m=>{META=m;m.forEach(x=>BOX[x.id]=x.box);if(!BOX.hasOwnProperty(st.t))st.t='02';fixPick();build();render(true)}).catch(()=>{$('#note').textContent='The designs could not load. Text (929) 371-0501 and we will help you order.'});
 
 function build(){
   $('#name').value=st.name;$('#est').value=st.est;
@@ -261,7 +264,7 @@ function build(){
   $('#name').oninput=e=>{st.name=e.target.value.slice(0,16);render()};
   $('#est').oninput=e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4);st.est=e.target.value;render()};
   $('#fonts').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.font=b.dataset.f;render()};
-  $('#prods').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.prod=b.dataset.p;const p=prod();if(!p.mats.includes(st.mat))st.mat=p.mats[0];if(!p.qty)st.qty=1;render(true)};
+  $('#prods').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.prod=b.dataset.p;const p=prod();if(!p.mats.includes(st.mat))st.mat=p.mats[0];if(!p.qty)st.qty=1;fixPick();strip();render(true)};
   $('#mats').onclick=e=>{const b=e.target.closest('button');if(!b||b.disabled)return;st.mat=b.dataset.m;render(true)};
   $('#shapes').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.shape=b.dataset.s;render(true)};
   $('#qtys').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.qty=+b.dataset.q;render(true)};
@@ -269,7 +272,7 @@ function build(){
   tilt();
 }
 function strip(){
-  const ids=META.map(m=>m.id).filter(id=>st.cat==='all'||TAGS[st.cat].split(' ').includes(id));
+  const ids=META.map(m=>m.id).filter(id=>okFor(id)&&(st.cat==='all'||TAGS[st.cat].split(' ').includes(id)));
   $('#strip').innerHTML=ids.map(id=>`<button class="tpl" data-t="${id}" aria-label="Design ${id}"><img src="${IMG}t-${id}.jpg" alt="" loading="lazy" width="90" height="90"><span>${id}</span></button>`).join('');
   marks();
 }
@@ -280,7 +283,7 @@ function sizeLabel(){return hasShape()?(st.shape==='round'?'4" ROUND COASTER':'4
 function font(){return FONTS.find(f=>f.id===st.font)}
 function price(){return PRICES[st.prod][st.mat][st.qty]}
 function marks(){
-  $$('#filters button').forEach(b=>b.classList.toggle('on',b.dataset.c===st.cat));
+  $$('#filters button').forEach(b=>{b.classList.toggle('on',b.dataset.c===st.cat);b.style.display=(b.dataset.c==='home'&&st.prod==='coaster')?'none':''});
   $$('.tpl').forEach(b=>b.classList.toggle('on',b.dataset.t===st.t));
   $$('#fonts button').forEach(b=>b.classList.toggle('on',b.dataset.f===st.font));
   $$('#prods button').forEach(b=>b.classList.toggle('on',b.dataset.p===st.prod));
