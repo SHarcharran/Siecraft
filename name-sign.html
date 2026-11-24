@@ -233,7 +233,7 @@ footer{max-width:1180px;margin:0 auto;padding:10px 16px 30px;color:var(--dim);fo
       </div>
       <div class="facts">
         <div class="fact"><b>CNC-cut in Orlando</b><span>Solid Baltic birch, sanded smooth</span></div>
-        <div class="fact"><b>Ships US-wide</b><span>Or free local pickup in Orlando</span></div>
+        <div class="fact"><b>Free shipping $35+</b><span>US-wide, or free local pickup in Orlando</span></div>
         <div class="fact"><b>We check every design</b><span>If anything needs a tweak, we email you before cutting</span></div>
         <div class="fact"><b>Questions?</b><span>Text (929) 371-0501 · info@siecraft.com</span></div>
       </div>
@@ -356,7 +356,7 @@ function render(){
   $('#hud-font').textContent=c.font.label.toUpperCase(); $('#hud-mat').textContent=`${c.stock.id}" BIRCH`;
   $('#stage').classList.toggle('on-shelf',c.stock.id==='3/4');
   $('#price').firstChild.nodeValue=money(c.price);
-  $('#price-sub').textContent=`${c.fin.label} · ${c.size.width}in · ${c.stock.id}"`;
+  $('#price-sub').textContent=`${c.fin.label} · ${c.size.width}in · ${c.stock.id}" · ${c.price>=35?'free shipping':'free shipping at $35+'}`;
   syncNames();
   const u=new URL(location.href);
   u.search=new URLSearchParams({n:st.text,f:st.font,w:st.width,t:st.stock,c:st.finish,b:st.bar?'1':'0',...(MAKER?{maker:'1'}:{})}).toString();
@@ -450,7 +450,7 @@ async function checkout(){
 let delivery='pickup';
 function openOrder(){
   const c=cur();
-  $('#osum').innerHTML=`<b>"${esc(st.text.trim())}"</b> · ${esc(c.font.label)} font<br>${c.size.width}in wide (about ${last.height.toFixed(1)}in tall) · ${esc(c.stock.label)} · ${esc(c.fin.label)}${st.bar?' · underline bar':''}<br>Sign price <b>${money(c.price)}</b>${'' } + shipping if shipped`;
+  $('#osum').innerHTML=`<b>"${esc(st.text.trim())}"</b> · ${esc(c.font.label)} font<br>${c.size.width}in wide (about ${last.height.toFixed(1)}in tall) · ${esc(c.stock.label)} · ${esc(c.fin.label)}${st.bar?' · underline bar':''}<br>Sign price <b>${money(c.price)}</b>${c.price>=35?' · free US shipping or free Orlando pickup':' + '+money(c.size.ship)+' shipping if shipped (free at $35+)'}`;
   $('#oerr').textContent='';$('#dlg').showModal();
 }
 $('#ocancel').onclick=()=>$('#dlg').close();
@@ -465,7 +465,7 @@ $('#oform').addEventListener('submit',async e=>{
   const body={fname:f.fname,lname:f.lname,email:f.email,phone:f.phone,website:f.website,
     type:'Name Cutout Sign',material:c.stock.label,size:`${c.size.width}in wide (about ${last.height.toFixed(1)}in tall)`,qty:'1',finish:c.fin.label,
     delivery,zip:f.zip||'',
-    text:`"${st.text.trim()}" · ${c.font.label} font (${c.font.family})${st.bar?' · underline bar':''}\nBuilder price: ${money(c.price)} + shipping (${money(c.size.ship)} USPS) or free pickup\nCut file: ${link.toString()}`,
+    text:`"${st.text.trim()}" · ${c.font.label} font (${c.font.family})${st.bar?' · underline bar':''}\nBuilder price: ${money(c.price)} + ${c.price>=35?'FREE shipping ($35+)':'shipping ('+money(c.size.ship)+' USPS)'} or free pickup\nCut file: ${link.toString()}`,
     notes:f.notes||'',photos:photo?[{type:'image/jpeg',data:photo}]:[]};
   try{
     const r=await fetch('/api/quote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});

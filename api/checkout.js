@@ -12,6 +12,7 @@ const Stripe = require('stripe');
 const catalog = require('../products.json');
 
 const clip = (v, n) => String(v == null ? '' : v).slice(0, n);
+const FREE_SHIP_MIN = 35; // free US shipping on orders at or above this (dollars)
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -52,12 +53,14 @@ module.exports = async (req, res) => {
       adjustable_quantity: { enabled: true, minimum: 1, maximum: maxQty }
     };
     const ship = catalog.shipping || {};
+    // Quantity can change on Stripe's page, so only items priced $35+ on their own ship free.
+    const freeShip = item.price >= FREE_SHIP_MIN;
     extra.shipping_address_collection = { allowed_countries: ['US'] };
     extra.shipping_options = [
       { shipping_rate_data: { type: 'fixed_amount', display_name: clip(ship.pickupLabel || 'Free local pickup (Orlando)', 100),
           fixed_amount: { amount: 0, currency: 'usd' } } },
-      { shipping_rate_data: { type: 'fixed_amount', display_name: clip(ship.label || 'USPS shipping (US)', 100),
-          fixed_amount: { amount: Math.round((ship.flat || 6) * 100), currency: 'usd' } } }
+      { shipping_rate_data: { type: 'fixed_amount', display_name: clip(freeShip ? 'Free USPS shipping (US, orders $35+)' : (ship.label || 'USPS shipping (US)'), 100),
+          fixed_amount: { amount: freeShip ? 0 : Math.round((ship.flat || 6) * 100), currency: 'usd' } } }
     ];
     const fields = (item.personalize || []).slice(0, 3).map(f => ({
       key: String(f.key).replace(/[^a-zA-Z0-9]/g, '').slice(0, 200) || 'text',
@@ -100,8 +103,8 @@ module.exports = async (req, res) => {
     extra.shipping_options = [
       { shipping_rate_data: { type: 'fixed_amount', display_name: clip((catalog.shipping || {}).pickupLabel || 'Free local pickup (Orlando)', 100),
           fixed_amount: { amount: 0, currency: 'usd' } } },
-      { shipping_rate_data: { type: 'fixed_amount', display_name: clip(`USPS shipping (${size.width}in sign)`, 100),
-          fixed_amount: { amount: Math.round((size.ship || 12) * 100), currency: 'usd' } } }
+      { shipping_rate_data: { type: 'fixed_amount', display_name: clip(price >= FREE_SHIP_MIN ? `Free USPS shipping (${size.width}in sign, orders $35+)` : `USPS shipping (${size.width}in sign)`, 100),
+          fixed_amount: { amount: price >= FREE_SHIP_MIN ? 0 : Math.round((size.ship || 12) * 100), currency: 'usd' } } }
     ];
     const site0 = process.env.SITE_URL || 'https://siecraft.com';
     const q = new URLSearchParams({ n: text, f: font.id, w: String(size.width), t: stock.id, c: fin.id, b: bar ? '1' : '0' });
