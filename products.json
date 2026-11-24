@@ -69,7 +69,7 @@
       "name": "Engraved Coaster Set (4)",
       "emoji": "☕",
       "category": "Gifts",
-      "price": 40,
+      "price": 24,
       "madeToOrder": true,
       "description": "Set of 4 wood coasters engraved with a name, initials or short text.",
       "personalize": [
@@ -123,19 +123,19 @@
       {
         "width": 12,
         "price": 29,
-        "paint": 15,
+        "paint": 8,
         "ship": 8
       },
       {
         "width": 18,
         "price": 45,
-        "paint": 20,
+        "paint": 10,
         "ship": 12
       },
       {
         "width": 22,
         "price": 65,
-        "paint": 25,
+        "paint": 12,
         "ship": 15
       }
     ],

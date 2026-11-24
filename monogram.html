@@ -240,7 +240,7 @@ const PRODUCTS=[
   {id:'sign12',label:'Sign 12"',sub:'laser',mats:['wood'],qty:false,machine:'LASER',size:'12" ROUND SIGN',round:true},
   {id:'sign18',label:'Sign 18"',sub:'CNC carved',mats:['wood'],qty:false,machine:'CNC',size:'18" ROUND SIGN',round:true}];
 const MATS=[{id:'wood',label:'Wood',sub:'maple'},{id:'slate',label:'Slate',sub:'natural stone'}];
-const PRICES={coaster:{wood:{1:10,4:30},slate:{1:12,4:35}},sign12:{wood:{1:45}},sign18:{wood:{1:95}}};
+const PRICES={coaster:{wood:{1:8,4:24},slate:{1:12,4:35}},sign12:{wood:{1:45}},sign18:{wood:{1:95}}};
 let META=[],BOX={},st={},imgs={};
 const qs=new URLSearchParams(location.search);
 st={t:/^\d\d$/.test(qs.get('t')||'')?qs.get('t'):'02',name:(qs.get('n')||'Smith').slice(0,16),est:(qs.get('e')||'').replace(/\D/g,'').slice(0,4),font:FONTS.some(f=>f.id===qs.get('f'))?qs.get('f'):'classic',prod:PRODUCTS.some(p=>p.id===qs.get('p'))?qs.get('p'):'coaster',mat:qs.get('m')==='slate'?'slate':'wood',qty:qs.get('q')==='4'?4:1,shape:qs.get('s')==='round'?'round':'square',cat:'all'};
