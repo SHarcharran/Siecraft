@@ -239,7 +239,7 @@ const PRODUCTS=[
   {id:'coaster',label:'Coaster',sub:'4"',mats:['wood','slate'],qty:true,machine:'LASER',size:'4" COASTER'},
   {id:'sign12',label:'Sign 12"',sub:'laser',mats:['wood'],qty:false,machine:'LASER',size:'12" ROUND SIGN',round:true},
   {id:'sign18',label:'Sign 18"',sub:'CNC carved',mats:['wood'],qty:false,machine:'CNC',size:'18" ROUND SIGN',round:true}];
-const MATS=[{id:'wood',label:'Wood',sub:'maple'},{id:'slate',label:'Slate',sub:'natural stone'}];
+const MATS=[{id:'wood',label:'Wood',sub:'solid hardwood'},{id:'slate',label:'Slate',sub:'natural stone'}];
 const PRICES={coaster:{wood:{1:8,4:24},slate:{1:12,4:35}},sign12:{wood:{1:45}},sign18:{wood:{1:95}}};
 let META=[],BOX={},st={},imgs={};
 const qs=new URLSearchParams(location.search);
@@ -359,7 +359,7 @@ $('#oform').addEventListener('submit',async e=>{
   btn.disabled=true;btn.textContent='Sending…';
   let photo=null;try{photo=$('#cv').toDataURL('image/jpeg',0.85).split(',')[1]}catch(err){}
   const body={fname:f.fname,lname:f.lname,email:f.email,phone:f.phone,website:f.website,
-    type:'Family Monogram '+(p.qty?'Coaster':'Sign'),material:st.mat==='slate'?'Slate':'Wood (maple)',size:sizeLabel().toLowerCase(),qty:p.qty?(st.qty===4?'Set of 4':'1'):'1',finish:p.machine==='CNC'?'CNC-carved':'Laser-engraved',
+    type:'Family Monogram '+(p.qty?'Coaster':'Sign'),material:st.mat==='slate'?'Slate':'Wood',size:sizeLabel().toLowerCase(),qty:p.qty?(st.qty===4?'Set of 4':'1'):'1',finish:p.machine==='CNC'?'CNC-carved':'Laser-engraved',
     delivery,zip:f.zip||'',
     text:`Monogram design #${st.t} (Jozoor 54 bundle, file ${st.t}.svg)\nName: "${st.name.trim()}"${st.est.length===4?' · Est. '+st.est:''} · ${font().label} lettering\nBuilder price: $${price()} + shipping or free pickup\nBuilder link: ${location.href}`,
     notes:f.notes||'',photos:photo?[{type:'image/jpeg',data:photo}]:[]};
