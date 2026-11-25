@@ -2,7 +2,7 @@
    To remove it everywhere: set ON = false (or delete this file and its <script> tags). */
 (function () {
   var ON = false;
-  var TEXT = "We're still building siecraft.com, so a few things may change. Orders and quotes work. Questions? Text (929) 371-0501.";
+  var TEXT = "We're still building siecraft.com, so a few things may change. Orders and quotes work. Questions? Text (321) 364-3719.";
   if (!ON) return;
   try { var t = +localStorage.getItem("sc_notice_closed") || 0; if (Date.now() - t < 7 * 864e5) return; } catch (e) {}
   function show() {

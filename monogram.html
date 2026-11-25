@@ -190,7 +190,7 @@ footer{max-width:1180px;margin:0 auto;padding:10px 16px 30px;color:var(--dim);fo
         <div class="fact"><b>Made in Orlando</b><span>Laser-engraved or CNC-carved</span></div>
         <div class="fact"><b>Free design proof</b><span>You approve the layout before we cut</span></div>
         <div class="fact"><b>Ships US-wide</b><span>Or free local pickup in Orlando</span></div>
-        <div class="fact"><b>Questions?</b><span>Text (929) 371-0501 · info@siecraft.com</span></div>
+        <div class="fact"><b>Questions?</b><span>Text (321) 364-3719 · info@siecraft.com</span></div>
       </div>
     </div>
   </div>
@@ -248,7 +248,7 @@ function fixPick(){if(st.prod==='coaster'){if(st.cat==='home')st.cat='all';if(!o
 const qs=new URLSearchParams(location.search);
 st={t:/^\d\d$/.test(qs.get('t')||'')?qs.get('t'):'02',name:(qs.get('n')||'Smith').slice(0,16),est:(qs.get('e')||'').replace(/\D/g,'').slice(0,4),font:FONTS.some(f=>f.id===qs.get('f'))?qs.get('f'):'classic',prod:PRODUCTS.some(p=>p.id===qs.get('p'))?qs.get('p'):'coaster',mat:qs.get('m')==='slate'?'slate':'wood',qty:qs.get('q')==='4'?4:1,shape:qs.get('s')==='round'?'round':'square',cat:'all'};
 
-fetch(IMG+'meta.json').then(r=>r.json()).then(m=>{META=m;m.forEach(x=>BOX[x.id]=x.box);if(!BOX.hasOwnProperty(st.t))st.t='02';fixPick();build();render(true)}).catch(()=>{$('#note').textContent='The designs could not load. Text (929) 371-0501 and we will help you order.'});
+fetch(IMG+'meta.json').then(r=>r.json()).then(m=>{META=m;m.forEach(x=>BOX[x.id]=x.box);if(!BOX.hasOwnProperty(st.t))st.t='02';fixPick();build();render(true)}).catch(()=>{$('#note').textContent='The designs could not load. Text (321) 364-3719 and we will help you order.'});
 
 function build(){
   $('#name').value=st.name;$('#est').value=st.est;
@@ -371,7 +371,7 @@ $('#oform').addEventListener('submit',async e=>{
     const j=await r.json().catch(()=>({}));
     if(!r.ok||!j.ok)throw new Error(j.error&&j.error!=='send_failed'&&j.error!=='not_configured'?j.error:'Could not send right now.');
     $('#dlg').close();toast('Order sent! Check your email. We\'ll send your free design proof and payment link.');
-  }catch(err){$('#oerr').textContent=err.message+' Or text (929) 371-0501.'}
+  }catch(err){$('#oerr').textContent=err.message+' Or text (321) 364-3719.'}
   btn.disabled=false;btn.textContent='Send order';
 });
 function toast(t){const el=$('#toast');el.textContent=t;el.style.display='block';clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',6000)}

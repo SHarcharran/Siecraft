@@ -174,7 +174,7 @@ module.exports = async (req, res) => {
         '',
         `Your quote number is ${ref}. Mention it if you call or text.`,
         '',
-        'Questions, or want to add something? Just reply to this email or text (929) 371-0501.',
+        'Questions, or want to add something? Just reply to this email or text (321) 364-3719.',
         '',
         'SieCraft',
         'Made in Orlando, FL · siecraft.com'

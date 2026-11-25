@@ -5,7 +5,7 @@
 > Handmade in Orlando. Made to order. Every piece personalized.
 
 🌐 **Live Site:** [SieCraft.com](https://siecraft.com)  
-📱 **Phone/Text:** (929) 371-0501  
+📱 **Phone/Text:** (321) 364-3719  
 📧 **Email:** SieCraftcnc@gmail.com  
 📍 **Location:** Orlando, FL  
 📸 **Instagram:** [@SieCraftOrlando](https://instagram.com/SieCraftOrlando)
@@ -97,7 +97,7 @@ Without these, the site still works: the quote form and checkout show an honest 
 
 **SieCraft LLC**  
 Orlando, FL  
-(929) 371-0501  
+(321) 364-3719  
 SieCraftcnc@gmail.com  
 [SieCraft.com](https://siecraft.com)
 
